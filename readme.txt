@@ -1,5 +1,6 @@
 === Restrict Widgets ===
 Contributors: dfactory
+Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.5
 Tested up to: 3.5.1
@@ -13,7 +14,7 @@ Restrict Widgets allows you to easily hide or display widgets on specified pages
 
 [Restrict Widgets](http://www.dfactory.eu/plugins/restrict-widgets/) is all in one solution for widget management in WordPress. It lets you easily control the pages that each widget will appear on and avoid creating multiple sidebars and duplicating widgets. You can also set who can manage widgets, which sidebars and widgets will be available to selected users, which widget options will be available and how it will be displayed.
 
-By default, ‘Hide widget on selected’ is enabled with no options selected, so all current widgets will continue to display on all pages.
+By default, Hide widget on selected is enabled with no options selected, so all current widgets will continue to display on all pages.
 
 For more information, check out plugin page at [dFactory](http://www.dfactory.eu/) or plugin [support forum](http://www.dfactory.eu/support/forum/restrict-widgets/).
 
