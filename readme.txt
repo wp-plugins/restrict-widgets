@@ -1,17 +1,17 @@
 === Restrict Widgets ===
 Contributors: dfactory
-Tags: widget, widgets, widget-only, cms, hide, custom, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
+Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
-Take full control over your widgets! Select on which pages each widget will appear on, who can manage widgets and which widgets users can use.
+Restrict Widgets allows you to easily hide or display widgets on specified pages.
 
 == Description ==
 
-[Restrict Widgets](http://www.dfactory.eu/plugins/restrict-widgets/) is all in one solution for widget management in WordPress. It gives every widget an extra control fields that lets you control the pages that the widget will appear on. This plugin creates a new “manage_widgets” capability, that allows you to gives access to widgets page to selected WordPress user roles. You can also set which sidebars and widgets will be available to selected users, which widget options will be available and how it will be displayed.
+[Restrict Widgets](http://www.dfactory.eu/plugins/restrict-widgets/) is all in one solution for widget management in WordPress. It lets you easily control the pages that each widget will appear on and avoid creating multiple sidebars and duplicating widgets. You can also set who can manage widgets, which sidebars and widgets will be available to selected users, which widget options will be available and how it will be displayed.
 
 By default, ‘Hide widget on selected’ is enabled with no options selected, so all current widgets will continue to display on all pages.
 
@@ -46,6 +46,9 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix: Widget options not saving if no options selected 
 
 = 1.0 =
 Initial release
