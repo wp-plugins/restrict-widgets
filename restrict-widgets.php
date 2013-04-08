@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: Restrict Widgets allows you to hide or display widgets on specified pages.
-Version: 1.0.1
+Version: 1.0.1.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
