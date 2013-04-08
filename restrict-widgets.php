@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Restrict Widgets
-Description: Take full control over your widgets! Select on which pages each widget will appear on, who can manage widgets and which widgets users can use.
-Version: 1.0.0
+Description: Restrict Widgets allows you to hide or display widgets on specified pages.
+Version: 1.0.1.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -22,15 +22,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 class RestrictWidgets
 {
-	private $others = array();
-	private $users = array();
+	private $pages = array();
 	private $custom_post_types = array();
 	private $custom_post_types_archives = array();
 	private $categories = array();
 	private $taxonomies = array();
-	private $pages = array();
-	private $options = array();
+	private $others = array();
+	private $users = array();
 	private $languages = array();
+	private $options = array();
 
 
 	public function __construct()
@@ -44,7 +44,6 @@ class RestrictWidgets
 		add_action('admin_init', array(&$this, 'load_dynamic_data'));
 		add_action('widgets_init', array(&$this, 'load_other_data'), 10);
 		add_action('widgets_init', array(&$this, 'save_restrict_options'), 10);
-		add_action('widgets_init', array(&$this, 'init_restrict_widgets'), 10);
 		add_action('widgets_init', array(&$this, 'init_restrict_sidebars'), 11);
 		add_action('sidebar_admin_page', array(&$this, 'add_widgets_options_box'));
 		add_action('in_widget_form', array(&$this, 'display_admin_widgets_options'), 10, 3);
@@ -58,7 +57,10 @@ class RestrictWidgets
 		add_filter('dynamic_sidebar_params', array(&$this, 'restrict_sidebar_params'), 10, 3);		
 	}
 
-	// Fix for Polylang - removes language switcher in widgets
+
+	/**
+	 * Fix for Polylang - removes language switcher in widgets
+	*/
 	public function polylang_widgets()
 	{
 		if(function_exists('pll_the_languages'));
@@ -73,12 +75,18 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Loads text domain
+	*/
 	public function load_textdomain()
 	{
 		load_plugin_textdomain('restrict-widgets', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 	}
 
 
+	/**
+	 * Hides widgets for users without admin privileges
+	*/
 	public function restrict_sidebar_params($params)
 	{
 		if(!current_user_can('manage_options'))
@@ -100,6 +108,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Actives plugin
+	*/
 	public function activation()
 	{
 		$role = get_role('administrator');
@@ -121,6 +132,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Deactivates plugin
+	*/
 	public function deactivation()
 	{
 		$option = get_option('rw_widgets_options');
@@ -152,6 +166,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Loads dynamic data
+	*/
 	public function load_dynamic_data()
 	{
 		$this->taxonomies = get_taxonomies(
@@ -189,6 +206,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Loads other data (dynamic data here too like get_pages() due to some WP restrictions) and languages
+	*/
 	public function load_other_data()
 	{
 		$this->options = array(
@@ -249,6 +269,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Removes selected sidebars for users without edit_theme_options capability
+	*/
 	public function init_restrict_sidebars()
 	{
 		if(!current_user_can('manage_options') && current_user_can('edit_theme_options'))
@@ -263,24 +286,9 @@ class RestrictWidgets
 	}
 
 
-	public function init_restrict_widgets()
-	{
-		/*
-		global $wp_registered_widgets, $wp_registered_sidebars;
-
-		if(!current_user_can('manage_options') && current_user_can('edit_theme_options'))
-		{
-			$option = get_option('rw_widgets_options');
-
-			foreach(array_keys($option['available']) as $widget_class)
-			{
-				unregister_widget($widget_class);
-			}
-		}
-		*/
-	}
-
-
+	/**
+	 * Saves restrict widgets options
+	*/
 	public function save_restrict_options()
 	{
 		//are we saving with administration privileges?
@@ -411,6 +419,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Displays restrict widgets options box
+	*/
 	public function add_widgets_options_box()
 	{
 		if(!current_user_can('manage_options'))
@@ -539,12 +550,18 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Sorts widgets by name
+	*/
 	private function sort_widgets_by_name($element_a, $element_b)
 	{
 		return strnatcasecmp($element_a['name'], $element_b['name']);
 	}
 
 
+	/**
+	 * Loads scripts and styles
+	*/
 	public function widgets_scripts_styles($page)
 	{
 		if($page !== 'widgets.php')
@@ -565,6 +582,7 @@ class RestrictWidgets
 		$js_widgets = $js_class = $js_nonclass = array();
 		$orphan_sidebar = 0;
 
+		//only for users without admin privileges
 		if(!current_user_can('manage_options'))
 		{
 			global $wp_registered_widgets;
@@ -582,6 +600,7 @@ class RestrictWidgets
 				}
 			}
 
+			//which sidebars to hide
 			foreach($widgets as $widget)
 			{
 				if(isset($wp_registered_widgets[$widget]['callback'][0]))
@@ -593,12 +612,15 @@ class RestrictWidgets
 				}
 			}
 
+			//which widgets to hide
 			foreach($wp_registered_widgets as $widget)
 			{
+				//standard based widget class
 				if(isset($widget['callback'][0]) && is_object($widget['callback'][0]) && in_array(get_class($widget['callback'][0]), $restrict))
 				{
 					$js_class[] = $widget['callback'][0]->id_base;
 				}
+				//non-standard based widget
 				elseif(in_array($widget['id'], $restrict))
 				{
 					$js_nonclass[] = $widget['id'];
@@ -628,6 +650,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Displays lists of data (pages, custom post types, categories, taxonomiex, ...) for options box and widget box
+	*/
 	private function getSelectionGroup($group_name, $type, $widget = '', $instance = '', $option = '')
 	{
 		$rw_option = get_option('rw_widgets_options');
@@ -962,6 +987,9 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Displays widget box
+	*/
 	public function display_admin_widgets_options($widget, $empty, $instance)
 	{
 		if(isset($instance['rw_opt']['widget_select']) === FALSE) $instance['rw_opt']['widget_select'] = FALSE;
@@ -988,14 +1016,16 @@ class RestrictWidgets
 	}
 
 
+	/**
+	 * Saves widget box
+	*/
 	public function update_admin_widgets_options($instance, $new_instance)
 	{
-		$instance['rw_opt']['widget_select'] = ($new_instance['widget_select'] === 'yes' ? TRUE : FALSE);
-
 		if(is_array($new_instance['widget_multiselect']))
 		{
 			$selected = $new_instance['widget_multiselect'];
 
+			//pages
 			foreach($this->pages as $page)
 			{
 				if(in_array('pageid_'.$page->ID, $selected))
@@ -1008,6 +1038,7 @@ class RestrictWidgets
 				}
 			}
 
+			//custom post types
 			foreach($this->custom_post_types as $cpt)
 			{
 				if(in_array('cpt_'.$cpt->name, $selected))
@@ -1020,6 +1051,7 @@ class RestrictWidgets
 				}
 			}
 
+			//custom post types archives
 			foreach($this->custom_post_types_archives as $cpta)
 			{
 				if(in_array('cpta_'.$cpta->name, $selected))
@@ -1032,6 +1064,7 @@ class RestrictWidgets
 				}
 			}
 
+			//categories
 			foreach($this->categories as $category)
 			{
 				if(in_array('category_'.$category->cat_ID, $selected))
@@ -1044,6 +1077,7 @@ class RestrictWidgets
 				}
 			}
 
+			//taxonomies
 			foreach($this->taxonomies as $taxonomy)
 			{
 				if(in_array('taxonomy_'.$taxonomy->name, $selected))
@@ -1056,6 +1090,7 @@ class RestrictWidgets
 				}
 			}
 
+			//others
 			foreach($this->others as $key => $value)
 			{
 				if(in_array('others_'.$key, $selected))
@@ -1068,6 +1103,7 @@ class RestrictWidgets
 				}
 			}
 
+			//users
 			foreach($this->users as $key => $value)
 			{
 				if(in_array('users_'.$key, $selected))
@@ -1080,6 +1116,7 @@ class RestrictWidgets
 				}
 			}
 
+			//languages
 			if($this->languages !== FALSE)
 			{
 				foreach($this->languages as $key => $value)
@@ -1095,52 +1132,34 @@ class RestrictWidgets
 				}
 			}
 		}
+		//clear plugin-instance
+		else unset($instance['rw_opt']);
+
+		//widget_multiselect
+		$instance['rw_opt']['widget_select'] = ($new_instance['widget_select'] === 'yes' ? TRUE : FALSE);
 
 		return $instance;
 	}
 
 
+	/**
+	 * Manages front-end display of widgets
+	*/
 	public function display_frontend_widgets($instance)
 	{
-		// var_dump($instance);
-
-		/*
-		others_
-		+	front_page
-		+	blog_page
-		+	single_post
-		+	sticky_post
-		+	author_archive
-		+	date_archive
-		+	404_page
-		+	search_page
-
-		users_
-			logged_in
-			logged_out
-
-		+cpt_
-		+cpta_
-		+taxonomy_
-		+category_
-		language_
-		+pageid_
-		*/
-		
 		global $wp_query;
-		
+
 		$post_id = $wp_query->get_queried_object_id();
 
 		if(function_exists('icl_get_languages') || function_exists('pll_the_languages'))
 		{
-
 			$post_id = icl_object_id($post_id, 'page', FALSE);
-			
+
 			if(defined('ICL_LANGUAGE_CODE'))
 			{
 				$display = isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? TRUE : FALSE;
 			}
-			
+
 			if(isset($instance['rw_opt']['widget_select']))
 			{
 				if (($instance['rw_opt']['widget_select'] === TRUE && $display === FALSE) || ($instance['rw_opt']['widget_select'] === FALSE && $display === TRUE))
@@ -1240,7 +1259,7 @@ class RestrictWidgets
 				return FALSE;
 			}
 		}
-		
+
 		return $instance;
 	}
 
