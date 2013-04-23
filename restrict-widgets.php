@@ -46,7 +46,7 @@ class RestrictWidgets
 		add_action('widgets_init', array(&$this, 'save_restrict_options'), 10);
 		add_action('widgets_init', array(&$this, 'init_restrict_sidebars'), 11);
 		add_action('sidebar_admin_page', array(&$this, 'add_widgets_options_box'));
-		add_action('in_widget_form', array(&$this, 'display_admin_widgets_options'), 10, 3);
+		add_action('in_widget_form', array(&$this, 'display_admin_widgets_options'), 99, 3);
 		add_action('admin_enqueue_scripts', array(&$this, 'widgets_scripts_styles'));
 		add_action('admin_menu', array(&$this, 'manage_widgets_menu'));
 
@@ -54,7 +54,9 @@ class RestrictWidgets
 		add_filter('widget_display_callback', array(&$this, 'display_frontend_widgets'));
 		add_filter('widget_update_callback', array(&$this, 'update_admin_widgets_options'), 10, 3);
 		add_filter('user_has_cap', array(&$this, 'manage_widgets_cap'), 10, 3);
-		add_filter('dynamic_sidebar_params', array(&$this, 'restrict_sidebar_params'), 10, 3);		
+		add_filter('dynamic_sidebar_params', array(&$this, 'restrict_sidebar_params'), 10, 3);	
+		add_filter('plugin_row_meta', array(&$this, 'plugin_extend_links'), 10, 2);
+		add_filter('plugin_action_links', array(&$this, 'plugin_settings_link'), 10, 2);
 	}
 
 
@@ -76,11 +78,55 @@ class RestrictWidgets
 
 
 	/**
-	 * Loads text domain
+	 * Loads textdomain
 	*/
 	public function load_textdomain()
 	{
 		load_plugin_textdomain('restrict-widgets', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+	}
+	
+	
+	/**
+	 * Add links to Support Forum
+	*/
+	public function plugin_extend_links($links, $file) 
+	{
+		if (!current_user_can('install_plugins'))
+			return $links;
+	
+		$plugin = plugin_basename(__FILE__);
+		
+		if ($file == $plugin) 
+		{
+			return array_merge(
+				$links,
+				array(sprintf('<a href="http://www.dfactory.eu/support/forum/restrict-widgets/" target="_blank">%s</a>', __('Support', 'restrict-widgets')))
+			);
+		}
+		
+		return $links;
+	}
+	
+	
+	/**
+	 * Add links to Settings page
+	*/
+	function plugin_settings_link($links, $file) 
+	{
+		if (!is_admin() || !current_user_can('edit_theme_options'))
+			return $links;
+			
+		static $plugin;
+		
+		$plugin = plugin_basename(__FILE__);
+		
+		if ($file == $plugin) 
+		{
+			$settings_link = sprintf('<a href="%s">%s</a>', admin_url('widgets.php'), __('Widgets', 'restrict-widgets'));
+			array_unshift($links, $settings_link);
+		}
+	
+		return $links;
 	}
 
 

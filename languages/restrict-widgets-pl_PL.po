@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Restrict Widgets\n"
-"POT-Creation-Date: 2013-03-15 23:14+0100\n"
-"PO-Revision-Date: 2013-03-15 23:17+0100\n"
+"POT-Creation-Date: 2013-04-12 15:03+0100\n"
+"PO-Revision-Date: 2013-04-12 15:03+0100\n"
 "Last-Translator: Bartosz Arendt <info@digitalfactory.pl>\n"
 "Language-Team: dFactory <info@dfactory.eu>\n"
 "Language: English\n"
@@ -15,83 +15,92 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../restrict-widgets.php:194
+#: ../restrict-widgets.php:103
+msgid "Support"
+msgstr "Forum pomocy"
+
+#: ../restrict-widgets.php:118 ../restrict-widgets.php:1331
+#: ../restrict-widgets.php:1376
+msgid "Widgets"
+msgstr "Widgety"
+
+#: ../restrict-widgets.php:254
 msgid "Pages"
 msgstr "Strony"
 
-#: ../restrict-widgets.php:195
+#: ../restrict-widgets.php:255
 msgid "Custom Post Types"
 msgstr "Własne typy wpisów"
 
-#: ../restrict-widgets.php:196
+#: ../restrict-widgets.php:256
 msgid "Custom Post Type Archives"
 msgstr "Archiwa własnych typów wpisów"
 
-#: ../restrict-widgets.php:197
+#: ../restrict-widgets.php:257
 msgid "Categories"
 msgstr "Kategorie"
 
-#: ../restrict-widgets.php:198
+#: ../restrict-widgets.php:258
 msgid "Taxonomies"
 msgstr "Taksonomie"
 
-#: ../restrict-widgets.php:199
+#: ../restrict-widgets.php:259
 msgid "Others"
 msgstr "Inne"
 
-#: ../restrict-widgets.php:200
+#: ../restrict-widgets.php:260
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: ../restrict-widgets.php:201
+#: ../restrict-widgets.php:261
 msgid "Languages"
 msgstr "Języki"
 
-#: ../restrict-widgets.php:205
+#: ../restrict-widgets.php:265
 msgid "Front Page"
 msgstr "Strona główna"
 
-#: ../restrict-widgets.php:206
+#: ../restrict-widgets.php:266
 msgid "Blog Page"
 msgstr "Strona z wpisami"
 
-#: ../restrict-widgets.php:207
+#: ../restrict-widgets.php:267
 msgid "Single Posts"
 msgstr "Pojedyncze wpisy"
 
-#: ../restrict-widgets.php:208
+#: ../restrict-widgets.php:268
 msgid "Sticky Posts"
 msgstr "Wpisy przyklejone"
 
-#: ../restrict-widgets.php:209
+#: ../restrict-widgets.php:269
 msgid "Author Archive"
 msgstr "Archiwum autora"
 
-#: ../restrict-widgets.php:210
+#: ../restrict-widgets.php:270
 msgid "Date Archive"
 msgstr "Archiwum daty"
 
-#: ../restrict-widgets.php:211
+#: ../restrict-widgets.php:271
 msgid "404 Page"
 msgstr "Strona błędów 404"
 
-#: ../restrict-widgets.php:212
+#: ../restrict-widgets.php:272
 msgid "Search Page"
 msgstr "Strona wyszukiwania"
 
-#: ../restrict-widgets.php:216
+#: ../restrict-widgets.php:276
 msgid "Logged in users"
 msgstr "Zalogowani użytkownicy"
 
-#: ../restrict-widgets.php:217
+#: ../restrict-widgets.php:277
 msgid "Logged out users"
 msgstr "Wylogowani użytkownicy"
 
-#: ../restrict-widgets.php:447
+#: ../restrict-widgets.php:498
 msgid "Restrict widgets"
 msgstr "Ograniczenia widgetów"
 
-#: ../restrict-widgets.php:451
+#: ../restrict-widgets.php:502
 msgid ""
 "Use this settings to manage access to widgets page and to restrict "
 "availability of certain widgets, sidebars and widgets options to site "
@@ -101,84 +110,80 @@ msgstr ""
 "widgety, panele boczne i ustawienia widgetów są dostępne dla użytkowników a "
 "jakie tylko dla administratorów."
 
-#: ../restrict-widgets.php:454
+#: ../restrict-widgets.php:505
 msgid "Restrict Users"
 msgstr "Ograniczenia użytkowników"
 
-#: ../restrict-widgets.php:464
+#: ../restrict-widgets.php:515
 msgid "Select user roles restricted to manage widgets."
 msgstr "Wybierz role użytkowników, którzy mogą zarządzać widgetami."
 
-#: ../restrict-widgets.php:468
+#: ../restrict-widgets.php:519
 msgid "Restrict Sidebars"
 msgstr "Ograniczenia paneli bocznych"
 
-#: ../restrict-widgets.php:483
+#: ../restrict-widgets.php:534
 msgid "Select which sidebars will be restricted to admins only."
 msgstr "Wybierz panele boczne, które będą dostępne tylko dla administratorów."
 
-#: ../restrict-widgets.php:487
+#: ../restrict-widgets.php:538
 msgid "Restrict Widgets"
 msgstr "Ograniczenia widgetów"
 
-#: ../restrict-widgets.php:499
+#: ../restrict-widgets.php:550
 msgid "Select which widgets will be restricted to admins only."
 msgstr "Wybierz widgety, któe będą dostępne tylko dla administratorów."
 
-#: ../restrict-widgets.php:503
+#: ../restrict-widgets.php:554
 msgid "Restrict Widget Options"
 msgstr "Ograniczenia opcji widgetów"
 
-#: ../restrict-widgets.php:513
+#: ../restrict-widgets.php:564
 msgid "Select which widget options will be restricted to admins only."
 msgstr "Wybierz które opcje widgetów, będą dostępne tylko dla administratorów."
 
-#: ../restrict-widgets.php:517
+#: ../restrict-widgets.php:568
 msgid "Restrict Option Groups"
 msgstr "Ograniczenia grup opcji"
 
-#: ../restrict-widgets.php:520
+#: ../restrict-widgets.php:571
 msgid "Display widget options in groups"
 msgstr "Wyświetl opcje widgetów w grupach"
 
-#: ../restrict-widgets.php:524
+#: ../restrict-widgets.php:575
 msgid "Plugin Deactivation"
 msgstr "Deaktywacja wtyczki"
 
-#: ../restrict-widgets.php:527
+#: ../restrict-widgets.php:578
 msgid "Remove all plugin data on deactivation"
 msgstr "Usuń wszystkie dane wtyczki podczas deaktywacji"
 
-#: ../restrict-widgets.php:531
+#: ../restrict-widgets.php:582
 msgid "Save settings"
 msgstr "Zapisz ustawienia"
 
-#: ../restrict-widgets.php:532
+#: ../restrict-widgets.php:583
 msgid "Created by"
 msgstr "Stworzone przez"
 
-#: ../restrict-widgets.php:692 ../restrict-widgets.php:702
+#: ../restrict-widgets.php:757 ../restrict-widgets.php:767
 #, php-format
 msgid "Single %s"
 msgstr "Pojedyncze %s"
 
-#: ../restrict-widgets.php:732 ../restrict-widgets.php:742
+#: ../restrict-widgets.php:797 ../restrict-widgets.php:807
 #, php-format
 msgid "%s Archive"
 msgstr "Archiwum %s"
 
-#: ../restrict-widgets.php:970
+#: ../restrict-widgets.php:1038
 msgid "Display / Hide Widget"
 msgstr "Wyświetl / Ukryj widget"
 
-#: ../restrict-widgets.php:972
+#: ../restrict-widgets.php:1040
 msgid "Display widget on selected"
 msgstr "Wyświetl widget na wybranych stronach"
 
-#: ../restrict-widgets.php:973
+#: ../restrict-widgets.php:1041
 msgid "Hide widget on selected"
 msgstr "Ukryj widget na wybranych stronach"
-
-#: ../restrict-widgets.php:1259 ../restrict-widgets.php:1304
-msgid "Widgets"
-msgstr "Widgety"
