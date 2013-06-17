@@ -33,9 +33,9 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 
 == Installation ==
 
-1. Install Restrict Widgets either via the WordPress.org plugin directory, or by uploading the files to your server</li>
-1. Activate the plugin through the 'Plugins' menu in WordPress</li>
-1. Go to the Widgets menu and set your desired widgets options.</li>
+1. Install Restrict Widgets either via the WordPress.org plugin directory, or by uploading the files to your server
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Go to the Widgets menu and set your desired widgets options.
 
 == Frequently Asked Questions ==
 
@@ -56,4 +56,5 @@ Initial release
 
 == Upgrade Notice ==
 
-The current version of Restrict Widgets requires WordPress 3.5 or higher. If you use older version of WordPress, you need to upgrade WordPress first.
+= 1.0.1 =
+The current version of Restrict Widgets requires WordPress 3.3 or higher. If you use older version of WordPress, you need to upgrade WordPress first.
