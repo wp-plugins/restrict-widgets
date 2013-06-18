@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Restrict Widgets
-Description: Restrict Widgets allows you to hide or display widgets on specified pages.
-Version: 1.0.1.1
+Description: Restrict Widgets not only allows you to easily hide or display widgets on specified pages but gives you complete control over widgets and sidebars.
+Version: 1.1.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -20,7 +20,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 
-class RestrictWidgets
+class Restrict_Widgets
 {
 	private $pages = array();
 	private $custom_post_types = array();
@@ -587,8 +587,7 @@ class RestrictWidgets
 						</tr>
 					</table>
 					<input type="submit" value="'.__('Save settings', 'restrict-widgets').'" name="save-widgets-options" class="button button-primary" id="save-widgets-options" />
-					<p id="df-credits">'.__('Created by', 'restrict-widgets').
-					'<a href="http://www.dfactory.eu" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
+					<p id="df-credits">Created by<a href="http://www.dfactory.eu" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
 					<br class="clear" />
 				</form>
 			</div>
@@ -621,7 +620,7 @@ class RestrictWidgets
 
 		wp_enqueue_script(
 			'restrict-widgets',
-			plugins_url('js/restrict-widgets.js', __FILE__),
+			plugins_url('js/restrict-widgets-admin.js', __FILE__),
 			array('jquery', 'chosen')
 		);
 
@@ -692,7 +691,7 @@ class RestrictWidgets
 		);
 
 		wp_enqueue_style('chosen', plugins_url('css/chosen.css', __FILE__));
-		wp_enqueue_style('style', plugins_url('css/style.css', __FILE__));
+		wp_enqueue_style('style', plugins_url('css/restrict-widgets-admin.css', __FILE__));
 	}
 
 
@@ -1188,6 +1187,38 @@ class RestrictWidgets
 	}
 
 
+	private function is_widget_empty($widget, $type)
+	{
+		if(!empty($widget))
+		{
+			foreach($widget as $option => $bool)
+			{
+				$action = explode('_', $option, 2);
+
+				if($type === 'main')
+				{
+					$array = array('category', 'taxonomy', 'cpt', 'cpta', 'pageid', 'others');
+				}
+				elseif($type === 'lang')
+				{
+					$array = array('language');
+				}
+				elseif($type === 'user')
+				{
+					$array = array('users');
+				}
+
+				if(in_array($action[0], $array))
+				{
+					return FALSE;
+				}
+			}
+		}
+
+		return TRUE;
+	}
+
+
 	/**
 	 * Manages front-end display of widgets
 	*/
@@ -1195,118 +1226,189 @@ class RestrictWidgets
 	{
 		global $wp_query;
 
+		$display_lang = $display_user = $display_main = '';
+		$empty_lang = $empty_user = $empty_main = TRUE;
+		$return = FALSE;
+
 		$post_id = $wp_query->get_queried_object_id();
+		$display_type = isset($instance['rw_opt']['widget_select']) ? $instance['rw_opt']['widget_select'] : FALSE;
 
-		if(function_exists('icl_get_languages') || function_exists('pll_the_languages'))
+		if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'lang') === FALSE)
 		{
-			$post_id = icl_object_id($post_id, 'page', FALSE);
-
-			if(defined('ICL_LANGUAGE_CODE'))
+			if(function_exists('icl_get_languages') || function_exists('pll_the_languages'))
 			{
-				$display = isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? TRUE : FALSE;
-			}
+				$empty_lang = FALSE;
+				$post_id = icl_object_id($post_id, 'page', FALSE);
+				$found_lang = (defined('ICL_LANGUAGE_CODE') && isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? TRUE : FALSE);
 
-			if(isset($instance['rw_opt']['widget_select']))
-			{
-				if (($instance['rw_opt']['widget_select'] === TRUE && $display === FALSE) || ($instance['rw_opt']['widget_select'] === FALSE && $display === TRUE))
+				if($display_type === TRUE)
 				{
-					return FALSE;
+					if($found_lang === TRUE)
+					{
+						$display_lang = TRUE;
+					}
+					else
+					{
+						$return = TRUE;
+						$display_lang = FALSE;
+					}
 				}
-			}
-		}
-
-		if (isset($instance['rw_opt']['users_logged_in']) || isset($instance['rw_opt']['users_logged_out']))
-		{
-			if(is_user_logged_in())
-			{
-				$display = isset($instance['rw_opt']['users_logged_in']) ? TRUE : FALSE;
+				else
+				{
+					$display_lang = ($found_lang === TRUE ? FALSE : TRUE);
+				}
 			}
 			else
 			{
-				$display = isset($instance['rw_opt']['users_logged_out']) ? TRUE : FALSE;
+				$display_lang = TRUE;
 			}
-			if(isset($instance['rw_opt']['widget_select']))
+		}
+		else
+		{
+			$display_lang = TRUE;
+		}
+
+		if($return === FALSE)
+		{
+			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'user') === FALSE)
 			{
-				if (($instance['rw_opt']['widget_select'] === TRUE && $display === FALSE) || ($instance['rw_opt']['widget_select'] === FALSE && $display === TRUE))
+				$empty_user = FALSE;
+
+				if(is_user_logged_in())
 				{
-					return FALSE;
+					if(isset($instance['rw_opt']['users_logged_in'], $instance['rw_opt']['users_logged_out']) || isset($instance['rw_opt']['users_logged_in']))
+					{
+						$found_user = TRUE;
+					}
+					elseif(isset($instance['rw_opt']['users_logged_out']))
+					{
+						$found_user = FALSE;
+					}
+				}
+				else
+				{
+					if(isset($instance['rw_opt']['users_logged_out'], $instance['rw_opt']['users_logged_in']) || isset($instance['rw_opt']['users_logged_out']))
+					{
+						$found_user = TRUE;
+					}
+					elseif(isset($instance['rw_opt']['users_logged_in']))
+					{
+						$found_user = FALSE;
+					}
+				}
+
+				if($display_type === TRUE)
+				{
+					if($found_user === TRUE)
+					{
+						$display_user = TRUE;
+					}
+					else
+					{
+						$return = TRUE;
+						$display_user = FALSE;
+					}
+				}
+				else
+				{
+					$display_user = ($found_user === TRUE ? FALSE : TRUE);
 				}
 			}
-		}
-
-		if(is_front_page())
-		{
-			$display = isset($instance['rw_opt']['others_front_page']) ? TRUE : FALSE;
-
-			if(is_home() && $display == FALSE)
+			else
 			{
-				$display = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
-			}
-		}
-		elseif(is_home())
-		{
-			$display = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
-		}
-		elseif(is_page())
-		{
-			$display = isset($instance['rw_opt']['pageid_'.$post_id]) ? TRUE : FALSE;
-		}
-		elseif(is_singular())
-		{
-			$display = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? TRUE : FALSE;
-			
-			if(is_single() && $display == FALSE)
-			{
-				$display = isset($instance['rw_opt']['others_single_post']) ? TRUE : FALSE;
-			}
-		}
-		elseif(is_category())
-		{
-			$display = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? TRUE : FALSE;
-		}
-		elseif(is_tax())
-		{
-			$display = isset($instance['rw_opt']['taxonomy_'.get_query_var('taxonomy')]) ? TRUE : FALSE;
-		}
-		elseif(is_404())
-		{
-			$display = isset($instance['rw_opt']['others_404_page']) ? TRUE : FALSE;
-		}
-		elseif(is_sticky())
-		{
-			$display = isset($instance['rw_opt']['others_sticky_post']) ? TRUE : FALSE;
-		}
-		elseif(is_search())
-		{
-			$display = isset($instance['rw_opt']['others_search_page']) ? TRUE : FALSE;
-		}
-		elseif(is_author())
-		{
-			$display = isset($instance['rw_opt']['others_author_archive']) ? TRUE : FALSE;
-		}
-		elseif(is_date())
-		{
-			$display = isset($instance['rw_opt']['others_date_archive']) ? TRUE : FALSE;
-		}
-		elseif(is_post_type_archive())
-		{
-			$display = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? TRUE : FALSE;
-		}
-
-		if(!isset($display))
-		{
-			$display = FALSE;
-		}
-
-		if(isset($instance['rw_opt']['widget_select']))
-		{
-			if (($instance['rw_opt']['widget_select'] === TRUE && $display === FALSE) || ($instance['rw_opt']['widget_select'] === FALSE && $display === TRUE))
-			{
-				return FALSE;
+				$display_user = TRUE;
 			}
 		}
 
-		return $instance;
+		if($return === FALSE)
+		{
+			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'main') === FALSE)
+			{
+				$empty_main = FALSE;
+
+				if(is_front_page())
+				{
+					$found_main = isset($instance['rw_opt']['others_front_page']) ? TRUE : FALSE;
+
+					if(is_home() && $found_main == FALSE)
+					{
+						$found_main = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
+					}
+				}
+				elseif(is_home())
+				{
+					$found_main = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
+				}
+				elseif(is_page())
+				{
+					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? TRUE : FALSE;
+				}
+				elseif(is_singular())
+				{
+					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? TRUE : FALSE;
+					
+					if(is_single() && $found_main == FALSE)
+					{
+						$found_main = isset($instance['rw_opt']['others_single_post']) ? TRUE : FALSE;
+					}
+				}
+				elseif(is_category())
+				{
+					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? TRUE : FALSE;
+				}
+				elseif(is_tax())
+				{
+					$found_main = isset($instance['rw_opt']['taxonomy_'.get_query_var('taxonomy')]) ? TRUE : FALSE;
+				}
+				elseif(is_404())
+				{
+					$found_main = isset($instance['rw_opt']['others_404_page']) ? TRUE : FALSE;
+				}
+				elseif(is_sticky())
+				{
+					$found_main = isset($instance['rw_opt']['others_sticky_post']) ? TRUE : FALSE;
+				}
+				elseif(is_search())
+				{
+					$found_main = isset($instance['rw_opt']['others_search_page']) ? TRUE : FALSE;
+				}
+				elseif(is_author())
+				{
+					$found_main = isset($instance['rw_opt']['others_author_archive']) ? TRUE : FALSE;
+				}
+				elseif(is_date())
+				{
+					$found_main = isset($instance['rw_opt']['others_date_archive']) ? TRUE : FALSE;
+				}
+				elseif(is_post_type_archive())
+				{
+					$found_main = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? TRUE : FALSE;
+				}
+
+				$display_main = ($display_type === TRUE ? ($found_main === TRUE ? TRUE : FALSE) : ($found_main === TRUE ? FALSE : TRUE));
+			}
+			else
+			{
+				$display_main = TRUE;
+			}
+		}
+
+		if($display_type === TRUE)
+		{
+			$final_return = ($display_lang === TRUE && $display_user === TRUE && $display_main === TRUE ? $instance : FALSE);
+		}
+		else
+		{
+			$final_return = ((($empty_lang === FALSE && $empty_user === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_user === FALSE && $display_main === FALSE) || ($empty_lang === FALSE && $empty_user === FALSE && $display_lang === FALSE && $display_user === FALSE) || ($empty_lang === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_main === FALSE) || ($empty_user === FALSE && $empty_main === FALSE && $display_user === FALSE && $display_main === FALSE) || ($empty_lang === FALSE && $display_lang === FALSE) || ($empty_user === FALSE && $display_lang === FALSE) || ($empty_main === FALSE && $display_main === FALSE)) ? FALSE : $instance);
+		}
+
+		// filter true or false
+		$final_return = apply_filters_ref_array('rw_display_widget', array($final_return, $instance));
+		// if true return instance
+		$final_return = ($final_return === FALSE) ? FALSE : $instance;
+		
+		//display: return $instance, hide: return FALSE
+		return $final_return;
 	}
 
 
@@ -1436,5 +1538,5 @@ class RestrictWidgets
 }
 
 
-$rw_in = new RestrictWidgets();
+$restrict_widgets = new Restrict_Widgets();
 ?>
