@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Restrict Widgets
-Description: Restrict Widgets allows you to hide or display widgets on specified pages.
-Version: 1.1.0
+Description: Restrict Widgets not only allows you to easily hide or display widgets on specified pages but gives you complete control over widgets and sidebars.
+Version: 1.1.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -587,8 +587,7 @@ class Restrict_Widgets
 						</tr>
 					</table>
 					<input type="submit" value="'.__('Save settings', 'restrict-widgets').'" name="save-widgets-options" class="button button-primary" id="save-widgets-options" />
-					<p id="df-credits">'.__('Created by', 'restrict-widgets').
-					'<a href="http://www.dfactory.eu" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
+					<p id="df-credits">Created by<a href="http://www.dfactory.eu" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
 					<br class="clear" />
 				</form>
 			</div>
@@ -1403,8 +1402,13 @@ class Restrict_Widgets
 			$final_return = ((($empty_lang === FALSE && $empty_user === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_user === FALSE && $display_main === FALSE) || ($empty_lang === FALSE && $empty_user === FALSE && $display_lang === FALSE && $display_user === FALSE) || ($empty_lang === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_main === FALSE) || ($empty_user === FALSE && $empty_main === FALSE && $display_user === FALSE && $display_main === FALSE) || ($empty_lang === FALSE && $display_lang === FALSE) || ($empty_user === FALSE && $display_lang === FALSE) || ($empty_main === FALSE && $display_main === FALSE)) ? FALSE : $instance);
 		}
 
+		// filter true or false
+		$final_return = apply_filters_ref_array('rw_display_widget', array($final_return, $instance));
+		// if true return instance
+		$final_return = ($final_return === FALSE) ? FALSE : $instance;
+		
 		//display: return $instance, hide: return FALSE
-		return apply_filters('rw_display_widget', $final_return);
+		return $final_return;
 	}
 
 

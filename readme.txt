@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -30,6 +30,10 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 * Polylang compatible
 * .pot file for translations included
 
+= Translations: =
+
+* Chinese - by Changmeng Hu
+
 
 == Installation ==
 
@@ -48,6 +52,10 @@ No questions yet.
 
 == Changelog ==
 
+= 1.1.1 =
+* Tweak: Optimized rw_display_widget() filter
+* New: Chinese translation by Changmeng Hu
+
 = 1.1.0 =
 * Fix: Show on selected not working in some cases
 * Fix: Restricting on user_logged_in/out
@@ -62,5 +70,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.1.0 =
-Bugfixes for widget display and a new filter
+= 1.1.1 =
+Optimized rw_display_widget() filter and Chinese translation
