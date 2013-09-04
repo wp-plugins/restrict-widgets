@@ -3,8 +3,8 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 1.1.1
+Tested up to: 3.6
+Stable tag: 1.1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -26,6 +26,7 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 * Select which widgets will be restricted to admins only
 * Select which widget options will be restricted to admins only
 * Choose to display or not widget options as groups
+* Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
 * WPML compatible
 * Polylang compatible
 * .pot file for translations included
@@ -38,8 +39,8 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 == Installation ==
 
 1. Install Restrict Widgets either via the WordPress.org plugin directory, or by uploading the files to your server
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to the Widgets menu and set your desired widgets options.
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to the Widgets menu and set your desired widgets options.
 
 == Frequently Asked Questions ==
 
@@ -51,6 +52,10 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.1.2 =
+* New: Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
+* Fix: Compatibility fix for WordPress 3.6
 
 = 1.1.1 =
 * Tweak: Optimized rw_display_widget() filter
@@ -70,5 +75,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.1.1 =
-Optimized rw_display_widget() filter and Chinese translation
+= 1.1.2 =
+New: Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
