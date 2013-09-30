@@ -3,7 +3,7 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
-Tested up to: 3.6
+Tested up to: 3.6.1
 Stable tag: 1.1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -34,6 +34,8 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 = Translations: =
 
 * Chinese - by Changmeng Hu
+* Czech - by Martin Kucera
+* Polish - by Bartosz Arendt
 
 
 == Installation ==
@@ -52,6 +54,9 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.1.3 =
+* New: Czech translation by Martin Kucera
 
 = 1.1.2 =
 * New: Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
@@ -75,5 +80,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.1.2 =
-New: Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
+= 1.1.3 =
+* New: Czech translation by Martin Kucera
