@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Restrict Widgets
-Description: Restrict Widgets not only allows you to easily hide or display widgets on specified pages but gives you complete control over widgets and sidebars.
-Version: 1.1.2
+Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
+Version: 1.1.3
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -668,7 +668,7 @@ class Restrict_Widgets
 						</tr>
 					</table>
 					<input type="submit" value="'.__('Save settings', 'restrict-widgets').'" name="save-widgets-options" class="button button-primary" id="save-widgets-options" />
-					<p id="df-credits">Created by<a href="http://www.dfactory.eu" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
+					<p id="df-credits">Created by<a href="http://www.dfactory.eu/?utm_source=restrict-widgets-settings&utm_medium=link&utm_campaign=created-by" target="_blank" title="dFactory - Quality plugins for WordPress"><img src="'.plugins_url('images/logo-dfactory.png' ,__FILE__).'" title="dFactory - Quality plugins for WordPress" alt="dFactory - Quality plugins for WordPress" /></a></p>
 					<br class="clear" />
 				</form>
 			</div>
