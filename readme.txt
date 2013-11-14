@@ -3,7 +3,7 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
-Tested up to: 3.6.1
+Tested up to: 3.7.1
 Stable tag: 1.1.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -55,6 +55,10 @@ No questions yet.
 
 == Changelog ==
 
+= 1.1.4 =
+* New: Introducing rw_option_display_name filter hook
+* Tweak: WPML not displaying page names in default site language
+
 = 1.1.3 =
 * New: Czech translation by Martin Kucera
 
@@ -80,5 +84,6 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.1.3 =
-* New: Czech translation by Martin Kucera
+= 1.1.4 =
+* New: Introducing rw_option_display_name filter hook
+* Tweak: WPML not displaying page names in default site language

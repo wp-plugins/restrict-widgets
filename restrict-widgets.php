@@ -8,6 +8,8 @@ Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
+Text Domain: restrict-widgets
+Domain Path: /languages
 
 Restrict Widgets
 Copyright (C) 2013, Digital Factory - info@digitalfactory.pl
@@ -73,7 +75,7 @@ class Restrict_Widgets
 		{
 			$options = get_option('rw_widgets_options');
 
-			if($options['sidebar'] === TRUE)
+			if(isset($options['sidebar']) && $options['sidebar'] === TRUE)
 			{
 				global $wp_registered_widgets, $_wp_sidebars_widgets;
 
@@ -811,7 +813,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['pageid_'.$page->ID]) === FALSE) $instance['rw_opt']['pageid_'.$page->ID] = 0;
 
-								$html .= '<option value="pageid_'.$page->ID.'" '.selected($instance['rw_opt']['pageid_'.$page->ID], TRUE, FALSE).'>'.$page->post_title.'</option>';
+								$html .= '<option value="pageid_'.$page->ID.'" '.selected($instance['rw_opt']['pageid_'.$page->ID], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $page->post_title, 'page').'</option>';
 							}
 
 							break;
@@ -851,7 +853,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['cpt_'.$cpt->name]) === FALSE) $instance['rw_opt']['cpt_'.$cpt->name] = 0;
 
-								$html .= '<option value="cpt_'.$cpt->name.'" '.selected($instance['rw_opt']['cpt_'.$cpt->name], TRUE, FALSE).'>'.sprintf(__('Single %s','restrict-widgets'), $cpt->label).'</option>';
+								$html .= '<option value="cpt_'.$cpt->name.'" '.selected($instance['rw_opt']['cpt_'.$cpt->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', sprintf(__('Single %s','restrict-widgets'), $cpt->label), 'custom_post_type').'</option>';
 							}
 
 							break;
@@ -891,7 +893,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['cpta_'.$cpta->name]) === FALSE) $instance['rw_opt']['cpta_'.$cpta->name] = 0;
 
-								$html .= '<option value="cpta_'.$cpta->name.'" '.selected($instance['rw_opt']['cpta_'.$cpta->name], TRUE, FALSE).'>'.sprintf(__('%s Archive','restrict-widgets'), $cpta->label).'</option>';
+								$html .= '<option value="cpta_'.$cpta->name.'" '.selected($instance['rw_opt']['cpta_'.$cpta->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', sprintf(__('%s Archive','restrict-widgets'), $cpta->label), 'custom_post_type_archive').'</option>';
 							}
 
 							break;
@@ -931,7 +933,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['category_'.$category->cat_ID]) === FALSE) $instance['rw_opt']['category_'.$category->cat_ID] = 0;
 
-								$html .= '<option value="category_'.$category->cat_ID.'" '.selected($instance['rw_opt']['category_'.$category->cat_ID], TRUE, FALSE).'>'.$category->cat_name.'</option>';
+								$html .= '<option value="category_'.$category->cat_ID.'" '.selected($instance['rw_opt']['category_'.$category->cat_ID], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $category->cat_name, 'category').'</option>';
 							}
 
 							break;
@@ -971,7 +973,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['taxonomy_'.$taxonomy->name]) === FALSE) $instance['rw_opt']['taxonomy_'.$taxonomy->name] = 0;
 
-								$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($instance['rw_opt']['taxonomy_'.$taxonomy->name], TRUE, FALSE).'>'.$taxonomy->label.'</option>';
+								$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($instance['rw_opt']['taxonomy_'.$taxonomy->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $taxonomy->label, 'taxonomy').'</option>';
 							}
 
 							break;
@@ -1011,7 +1013,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['others_'.$key]) === FALSE) $instance['rw_opt']['others_'.$key] = 0;
 
-								$html .= '<option value="others_'.$key.'" '.selected($instance['rw_opt']['others_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+								$html .= '<option value="others_'.$key.'" '.selected($instance['rw_opt']['others_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'other').'</option>';
 							}
 
 							break;
@@ -1051,7 +1053,7 @@ class Restrict_Widgets
 							{
 								if(isset($instance['rw_opt']['users_'.$key]) === FALSE) $instance['rw_opt']['users_'.$key] = 0;
 
-								$html .= '<option value="users_'.$key.'" '.selected($instance['rw_opt']['users_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+								$html .= '<option value="users_'.$key.'" '.selected($instance['rw_opt']['users_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'user').'</option>';
 							}
 
 							break;
@@ -1093,7 +1095,7 @@ class Restrict_Widgets
 								{
 									if(isset($instance['rw_opt']['language_'.$key]) === FALSE) $instance['rw_opt']['language_'.$key] = 0;
 
-									$html .= '<option value="language_'.$key.'" '.selected($instance['rw_opt']['language_'.$key], TRUE, FALSE).'>'.$language['native_name'].'</option>';
+									$html .= '<option value="language_'.$key.'" '.selected($instance['rw_opt']['language_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $language['native_name'], 'language').'</option>';
 								}
 
 								break;
@@ -1313,6 +1315,7 @@ class Restrict_Widgets
 		$return = FALSE;
 
 		$post_id = $wp_query->get_queried_object_id();
+		
 		$display_type = isset($instance['rw_opt']['widget_select']) ? $instance['rw_opt']['widget_select'] : FALSE;
 
 		if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'lang') === FALSE)
@@ -1320,7 +1323,20 @@ class Restrict_Widgets
 			if(function_exists('icl_get_languages') || function_exists('pll_the_languages'))
 			{
 				$empty_lang = FALSE;
-				$post_id = icl_object_id($post_id, 'page', FALSE);
+				
+				// fix for WPML
+				if (function_exists('icl_object_id')) {
+						
+					global $sitepress;
+					
+					if (isset($sitepress))
+					{
+						$post_id = icl_object_id($post_id, 'page', TRUE, $sitepress->get_default_language());
+					} else {
+						$post_id = icl_object_id($post_id, 'page', FALSE);
+					}
+				}
+
 				$found_lang = (defined('ICL_LANGUAGE_CODE') && isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? TRUE : FALSE);
 
 				if($display_type === TRUE)
