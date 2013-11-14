@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
 Tested up to: 3.7.1
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
