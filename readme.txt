@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
 Tested up to: 3.7.1
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -20,13 +20,14 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 
 = Features include: =
 
-* Hide or display each widget on selected pages, posts, categories, custom taxonomies, custom post types, single posts, archives, special pages, for logged in or logged out users, current language and so on
+* Hide or display each widget on selected pages, posts, categories, custom taxonomies, custom post types, single posts, archives, special pages, for logged in or logged out users, current language, mobile device and so on
 * Select which user roles are restricted to manage widgets
 * Select which sidebars will be restricted to admins only
 * Select which widgets will be restricted to admins only
 * Select which widget options will be restricted to admins only
 * Choose to display or not widget options as groups
 * Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
+* Multisite compatible
 * WPML compatible
 * Polylang compatible
 * .pot file for translations included
@@ -54,6 +55,13 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.2.0 =
+* New: Multisite support
+* New: Option to hide / show widget depending on the device (mobile or not)
+* New: bbPress specific options for hide / show widget
+* Fix: get_class error on widgets not using Widgets API
+* Fix: Logged-in or out users option not working properly
 
 = 1.1.4 =
 * New: Introducing rw_option_display_name filter hook
@@ -84,6 +92,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.1.4 =
-* New: Introducing rw_option_display_name filter hook
-* Tweak: WPML not displaying page names in default site language
+= 1.2.0 =
+* New: Multisite support, Options to hide / show widget depending on the device (mobile or not), multiple fixes
