@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.0
+Version: 1.2.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -663,14 +663,15 @@ class Restrict_Widgets
 		}
 
 		echo '
-		<div id="widgets-options" class="widgets-holder-wrap restrict-widgets">
+		<div id="widgets-options" class="restrict-widgets">
 			<div class="sidebar-name">
-				<div class="sidebar-name-arrow"><br /></div>
 				<h3>'.__('Restrict widgets').'</h3>
 			</div>
 			<div class="widget-holder">
+				<div class="sidebar-description">
+					<p class="description">'.__('Use this settings to manage access to widgets page and to restrict availability of certain widgets, sidebars and widgets options to site administrators only.', 'restrict-widgets').'</p>
+				</div>
 				<form action="" method="post">
-					<p class="howto">'.__('Use this settings to manage access to widgets page and to restrict availability of certain widgets, sidebars and widgets options to site administrators only.', 'restrict-widgets').'</p>
 					<table>
 						<tr>
 							<td class="label"><label>'.__('Restrict Users', 'restrict-widgets').'</label></td>
@@ -792,8 +793,8 @@ class Restrict_Widgets
 		);
 
 		wp_enqueue_script(
-			'restrict-widgets',
-			RESTRICT_WIDGETS_URL.'/js/restrict-widgets-admin.js',
+			'restrict-widgets-admin',
+			RESTRICT_WIDGETS_URL.'/js/admin.js',
 			array('jquery', 'chosen')
 		);
 
@@ -844,7 +845,7 @@ class Restrict_Widgets
 		}
 
 		wp_localize_script(
-			'restrict-widgets',
+			'restrict-widgets-admin',
 			'rwArgs',
 			array(
 				'placeholder_text' => esc_attr__('Select options', 'restrict-widgets'),
@@ -860,8 +861,15 @@ class Restrict_Widgets
 			)
 		);
 
-		wp_enqueue_style('chosen', RESTRICT_WIDGETS_URL.'/css/chosen.css');
-		wp_enqueue_style('style', RESTRICT_WIDGETS_URL.'/css/restrict-widgets-admin.css');
+		wp_enqueue_style(
+			'chosen',
+			RESTRICT_WIDGETS_URL.'/css/chosen.css'
+		);
+
+		wp_enqueue_style(
+			'restrict-widgets-admin',
+			RESTRICT_WIDGETS_URL.'/css/admin.css'
+		);
 	}
 
 
@@ -1604,6 +1612,15 @@ class Restrict_Widgets
 				}
 				elseif(is_category())
 					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? TRUE : FALSE;
+				elseif(is_tag())
+				{
+					if(($object = get_queried_object()) !== NULL && isset($object->taxonomy) && $object->taxonomy === 'post_tag')
+						$tag = 'wp_log_type';
+					else
+						$tag = '';
+
+					$found_main = isset($instance['rw_opt']['taxonomy_'.$tag]) ? TRUE : FALSE;
+				}
 				elseif(is_tax())
 					$found_main = isset($instance['rw_opt']['taxonomy_'.get_query_var('taxonomy')]) ? TRUE : FALSE;
 				elseif(is_404())
@@ -1618,11 +1635,11 @@ class Restrict_Widgets
 					$found_main = isset($instance['rw_opt']['others_date_archive']) ? TRUE : FALSE;
 				elseif(is_post_type_archive())
 					$found_main = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? TRUE : FALSE;
-				elseif(bbp_is_search())
+				elseif(function_exists('bbp_is_search') && bbp_is_search())
 					$found_main = isset($instance['rw_opt']['bbpress_search']) ? TRUE : FALSE;
-				elseif(bbp_is_single_user())
+				elseif(function_exists('bbp_is_single_user') && bbp_is_single_user())
 					$found_main = isset($instance['rw_opt']['bbpress_single_user']) ? TRUE : FALSE;
-				elseif(bbp_is_topic_tag())
+				elseif(function_exists('bbp_is_topic_tag') && bbp_is_topic_tag())
 					$found_main = isset($instance['rw_opt']['bbpress_topic_tag']) ? TRUE : FALSE;
 
 				$display_main = ($display_type === TRUE ? ($found_main === TRUE ? TRUE : FALSE) : ($found_main === TRUE ? FALSE : TRUE));

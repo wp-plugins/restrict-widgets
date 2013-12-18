@@ -87,6 +87,9 @@
 	border-color: #DFDFDF;
 	padding: 10px;
 }
+.version-3-8 #widgets-options .widget-holder {
+	padding: 0;
+}
 .widget-liquid-right .widget, .inactive-sidebar .widget, .widget-liquid-right .sidebar-description {
     overflow: visible !important;
 }

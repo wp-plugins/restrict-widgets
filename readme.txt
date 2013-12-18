@@ -3,8 +3,8 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
-Tested up to: 3.7.1
-Stable tag: 1.2.0
+Tested up to: 3.8
+Stable tag: 1.2.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -56,6 +56,10 @@ No questions yet.
 
 == Changelog ==
 
+= 1.2.1 =
+* Fix: tags not working properly
+* Tweak: UI fixes for WP 3.8
+
 = 1.2.0 =
 * New: Multisite support
 * New: Option to hide / show widget depending on the device (mobile or not)
@@ -92,5 +96,6 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.0 =
-* New: Multisite support, Options to hide / show widget depending on the device (mobile or not), multiple fixes
+= 1.2.1 =
+* Fix: tags not working properly
+* Tweak: UI fixes for WP 3.8
