@@ -3,12 +3,12 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 1.0.1.1
+Tested up to: 3.8
+Stable tag: 1.2.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
-Restrict Widgets allows you to easily hide or display widgets on specified pages.
+All in one widgets and sidebars management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
 
 == Description ==
 
@@ -20,22 +20,30 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 
 = Features include: =
 
-* Hide or display each widget on selected pages, posts, categories, custom taxonomies, custom post types, single posts, archives, special pages, for logged in or logged out users, current language and so on
+* Hide or display each widget on selected pages, posts, categories, custom taxonomies, custom post types, single posts, archives, special pages, for logged in or logged out users, current language, mobile device and so on
 * Select which user roles are restricted to manage widgets
 * Select which sidebars will be restricted to admins only
 * Select which widgets will be restricted to admins only
 * Select which widget options will be restricted to admins only
 * Choose to display or not widget options as groups
+* Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
+* Multisite compatible
 * WPML compatible
 * Polylang compatible
 * .pot file for translations included
 
+= Translations: =
+
+* Chinese - by Changmeng Hu
+* Czech - by Martin Kucera
+* Polish - by Bartosz Arendt
+
 
 == Installation ==
 
-1. Install Restrict Widgets either via the WordPress.org plugin directory, or by uploading the files to your server</li>
-1. Activate the plugin through the 'Plugins' menu in WordPress</li>
-1. Go to the Widgets menu and set your desired widgets options.</li>
+1. Install Restrict Widgets either via the WordPress.org plugin directory, or by uploading the files to your server
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to the Widgets menu and set your desired widgets options.
 
 == Frequently Asked Questions ==
 
@@ -48,6 +56,38 @@ No questions yet.
 
 == Changelog ==
 
+= 1.2.1 =
+* Fix: tags not working properly
+* Tweak: UI fixes for WP 3.8
+
+= 1.2.0 =
+* New: Multisite support
+* New: Option to hide / show widget depending on the device (mobile or not)
+* New: bbPress specific options for hide / show widget
+* Fix: get_class error on widgets not using Widgets API
+* Fix: Logged-in or out users option not working properly
+
+= 1.1.4 =
+* New: Introducing rw_option_display_name filter hook
+* Tweak: WPML not displaying page names in default site language
+
+= 1.1.3 =
+* New: Czech translation by Martin Kucera
+
+= 1.1.2 =
+* New: Option to modify the is_active_sidebar() function to use Restrict Widgets display settings
+* Fix: Compatibility fix for WordPress 3.6
+
+= 1.1.1 =
+* Tweak: Optimized rw_display_widget() filter
+* New: Chinese translation by Changmeng Hu
+
+= 1.1.0 =
+* Fix: Show on selected not working in some cases
+* Fix: Restricting on user_logged_in/out
+* Fix: Restricting for Polylang and WPML languages
+* New: Introducing filter rw_display_widget()
+
 = 1.0.1 =
 * Fix: Widget options not saving if no options selected 
 
@@ -56,4 +96,6 @@ Initial release
 
 == Upgrade Notice ==
 
-The current version of Restrict Widgets requires WordPress 3.5 or higher. If you use older version of WordPress, you need to upgrade WordPress first.
+= 1.2.1 =
+* Fix: tags not working properly
+* Tweak: UI fixes for WP 3.8
