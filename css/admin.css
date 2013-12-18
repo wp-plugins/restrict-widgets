@@ -74,7 +74,7 @@
 #widgets-left #widgets-options {
 	margin-left: 0;
 	margin-right: 0;
-	padding-top:20px; 
+	padding-top:20px;
 }
 #widgets-options .widget-holder {
 	border-width: 0 1px 1px;
@@ -89,6 +89,8 @@
 }
 .version-3-8 #widgets-options .widget-holder {
 	padding: 0;
+	background: none;
+	border: none;
 }
 .widget-liquid-right .widget, .inactive-sidebar .widget, .widget-liquid-right .sidebar-description {
     overflow: visible !important;
