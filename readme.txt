@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.3
 Tested up to: 3.8
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -56,6 +56,9 @@ No questions yet.
 
 == Changelog ==
 
+= 1.2.3 =
+* Fix: Language options not accessible for WPML and Polylang
+
 = 1.2.2 =
 * Tweak: UI fixes for WP 3.8
 
@@ -99,5 +102,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.2 =
-* Tweak: UI fixes for WP 3.8
+= 1.2.3 =
+* Fix: Language options not accessible
