@@ -17,7 +17,7 @@
 .restrict-widgets .chzn-container-multi .chzn-choices .search-field input { height:24px; }
 .restrict-widgets .chzn-choices { border:1px solid #dfdfdf; padding: 0 5px 0 2px; min-height:26px; }
 .restrict-widgets .chzn-container-active .chzn-choices { border:1px solid #aaa; -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); }
-.restrict-widgets .chzn-drop { min-width: 100%;}
+.restrict-widgets .chzn-drop { min-width: 100%; }
 .restrict-widgets .chzn-container-multi .chzn-choices { background:#fff; }
 .restrict-widgets .chzn-container-multi .chzn-choices .search-choice { 
 	background: -moz-linear-gradient(top, #f9f9f9 0%, #ececec 100%); /* FF3.6+ */
@@ -74,7 +74,7 @@
 #widgets-left #widgets-options {
 	margin-left: 0;
 	margin-right: 0;
-	padding-top:20px; 
+	padding-top:20px;
 }
 #widgets-options .widget-holder {
 	border-width: 0 1px 1px;
@@ -86,6 +86,11 @@
 	background-color: #FCFCFC;
 	border-color: #DFDFDF;
 	padding: 10px;
+}
+.version-3-8 #widgets-options .widget-holder {
+	padding: 0;
+	background: none;
+	border: none;
 }
 .widget-liquid-right .widget, .inactive-sidebar .widget, .widget-liquid-right .sidebar-description {
     overflow: visible !important;
