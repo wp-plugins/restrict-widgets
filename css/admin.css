@@ -61,44 +61,34 @@
 #options_available_widgets_chzn, #options_widgets_selection_chzn, #options_widgets_sidebars_chzn {
 	margin: 0 20px 0 0;
 }
+#widgets-left #widgets-options {
+	margin-left: 0;
+	margin-right: 0;
+	margin-right: 340px;
+	width: 100%;
+	border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+#widgets-left #widgets-options .widgets-sortables {
+	padding: 15px;
+}
+
 #widgets-options input[type="text"] {
 	line-height:20px;
 }
 #widgets-options select {
 	width: 100%;
-}
-#widgets-options {
-	margin-left: 5px;
-	margin-right: 340px;
-}
-#widgets-left #widgets-options {
-	margin-left: 0;
-	margin-right: 0;
-	padding-top:20px;
-}
-#widgets-options .widget-holder {
-	border-width: 0 1px 1px;
-	border-style: none solid solid;
-	-webkit-border-bottom-right-radius: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	background-color: #FCFCFC;
-	border-color: #DFDFDF;
-	padding: 10px;
-}
-.version-3-8 #widgets-options .widget-holder {
-	padding: 0;
-	background: none;
-	border: none;
+	-webkit-box-sizing : border-box;‌​
+    -moz-box-sizing : border-box;
+    box-sizing : border-box;
 }
 .widget-liquid-right .widget, .inactive-sidebar .widget, .widget-liquid-right .sidebar-description {
     overflow: visible !important;
 }
 #widgets-options table { width:100%; }
-#widgets-options td.label { width:30%; vertical-align:top; line-height:12px; }
-#widgets-options td.label label { padding-top:12px; font-weight:bold; color:#222; }
+#widgets-options .label { width:30%; vertical-align:top; line-height:12px; font-weight:bold; color:#222; }
 #widgets-options #save-widgets-options { margin: 20px 0 0 0; }
+#widgets-options form .description { font-style: italic; }
 
 #df-credits { float:right; font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-style:italic; margin:15px 0 0; display:block; }
 #df-credits a { padding: 5px 0 0 7px; vertical-align:middle; }

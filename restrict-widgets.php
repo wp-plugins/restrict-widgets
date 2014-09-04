@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.3
+Version: 1.2.4
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -663,100 +663,95 @@ class Restrict_Widgets
 		}
 
 		echo '
-		<div id="widgets-options" class="restrict-widgets">
+		<div id="widgets-options" class="restrict-widgets widgets-holder-wrap">
+			<div class="widgets-sortables">
 			<div class="sidebar-name">
 				<h3>'.__('Restrict widgets').'</h3>
 			</div>
-			<div class="widget-holder">
 				<div class="sidebar-description">
 					<p class="description">'.__('Use this settings to manage access to widgets page and to restrict availability of certain widgets, sidebars and widgets options to site administrators only.', 'restrict-widgets').'</p>
 				</div>
 				<form action="" method="post">
-					<table>
-						<tr>
-							<td class="label"><label>'.__('Restrict Users', 'restrict-widgets').'</label></td>
-							<td>
-								<select name="options-widgets-roles[]" id="options-widgets-roles" multiple="multiple">';
 
-		foreach($wp_roles->roles as $role_name => $role_array)
-		{
-			echo '<option value="'.$role_name.'" '.selected((in_array('manage_widgets', array_keys($role_array['capabilities']), TRUE) ? TRUE : FALSE), TRUE, FALSE).' '.disabled(($role_name === 'administrator' ? TRUE : FALSE), TRUE, FALSE).'>'.$role_array['name'].'</option>';
-		}
+					<label class="label">'.__('Restrict Users', 'restrict-widgets').'</label><br />
+					<select name="options-widgets-roles[]" id="options-widgets-roles" multiple="multiple">';
 
-		echo '					</select>
-								<p class="description">'.__('Select user roles restricted to manage widgets.', 'restrict-widgets').'</p>
-							</td>
-						</tr>
-						<tr>
-							<td class="label"><label>'.__('Restrict Sidebars', 'restrict-widgets').'</label></td>
-							<td>
-								<select name="options-widgets-sidebars[]" id="options-widgets-sidebars" multiple="multiple">';
+						foreach($wp_roles->roles as $role_name => $role_array)
+						{
+							echo '<option value="'.$role_name.'" '.selected((in_array('manage_widgets', array_keys($role_array['capabilities']), TRUE) ? TRUE : FALSE), TRUE, FALSE).' '.disabled(($role_name === 'administrator' ? TRUE : FALSE), TRUE, FALSE).'>'.$role_array['name'].'</option>';
+						}
+			
+					echo '
+					</select>
 
-		foreach($wp_registered_sidebars as $sidebar)
-		{
-			if($sidebar['id'] !== 'wp_inactive_widgets')
-			{
-				if(isset($option['sidebars'][$sidebar['id']]) === FALSE)
-					$option['sidebars'][$sidebar['id']] = FALSE;
+					<label class="label">'.__('Restrict Sidebars', 'restrict-widgets').'</label><br />
+					<select name="options-widgets-sidebars[]" id="options-widgets-sidebars" multiple="multiple">';
 
-				echo '<option value="'.$sidebar['id'].'" '.selected($option['sidebars'][$sidebar['id']], TRUE, FALSE).'>'.$sidebar['name'].'</option>';
-			}
-		}
+						foreach($wp_registered_sidebars as $sidebar)
+						{
+							if($sidebar['id'] !== 'wp_inactive_widgets')
+							{
+								if(isset($option['sidebars'][$sidebar['id']]) === FALSE)
+									$option['sidebars'][$sidebar['id']] = FALSE;
+				
+								echo '<option value="'.$sidebar['id'].'" '.selected($option['sidebars'][$sidebar['id']], TRUE, FALSE).'>'.$sidebar['name'].'</option>';
+							}
+						}
 
-		echo '					</select>
-								<p class="description">'.__('Select which sidebars will be restricted to admins only.', 'restrict-widgets').'</p>
-							</td>
-						</tr>
-						<tr>
-							<td class="label"><label>'.__('Restrict Widgets', 'restrict-widgets').'</label></td>
-							<td>
-								<select name="options-available-widgets[]" id="options-available-widgets" multiple="multiple">';
+					echo '
+						</select>
+						<p class="description">'.__('Select which sidebars will be restricted to admins only.', 'restrict-widgets').'</p>';
+					
+					echo '
+						<label class="label">'.__('Restrict Widgets', 'restrict-widgets').'</label><br />
+						<select name="options-available-widgets[]" id="options-available-widgets" multiple="multiple">';
+					
+							foreach(array_unique($widgets_unique) as $widget_class => $widget_name)
+							{
+								if(isset($option['available'][$widget_class]) === FALSE)
+									$option['available'][$widget_class] = FALSE;
+					
+								echo '<option value="'.$widget_class.'" '.selected($option['available'][$widget_class], TRUE, FALSE).'>'.$widget_name.'</option>';
+							}
 
-		foreach(array_unique($widgets_unique) as $widget_class => $widget_name)
-		{
-			if(isset($option['available'][$widget_class]) === FALSE)
-				$option['available'][$widget_class] = FALSE;
+					echo '
+						</select>
+						<p class="description">'.__('Select which widgets will be restricted to admins only.', 'restrict-widgets').'</p>
+						
+						<label class="label">'.__('Restrict Widget Options', 'restrict-widgets').'</label><br />
+						<select name="options-widgets-selection[]" id="options-widgets-selection" multiple="multiple">';
 
-			echo '<option value="'.$widget_class.'" '.selected($option['available'][$widget_class], TRUE, FALSE).'>'.$widget_name.'</option>';
-		}
+							foreach($this->options as $group_name => $value)
+							{
+								echo $this->getSelectionGroup($group_name, 'option', '', '', $option);
+							}
 
-		echo '					</select>
-								<p class="description">'.__('Select which widgets will be restricted to admins only.', 'restrict-widgets').'</p>
-							</td>
-						</tr>
-						<tr>
-							<td class="label"><label>'.__('Restrict Widget Options', 'restrict-widgets').'</label></td>
-							<td>
-								<select name="options-widgets-selection[]" id="options-widgets-selection" multiple="multiple">';
-
-		foreach($this->options as $group_name => $value)
-		{
-			echo $this->getSelectionGroup($group_name, 'option', '', '', $option);
-		}
-
-		echo '					</select>
+					echo '
+						</select>
 								<p class="description">'.__('Select which widget options will be restricted to admins only.', 'restrict-widgets').'</p>
-							</td>
-						</tr>
+					<table>
 						<tr>
 							<td class="label"><label>'.__('Restrict Option Groups', 'restrict-widgets').'</label></td>
 							<td>
+								<label for="options-widgets-groups">
 								<input type="checkbox" name="options-widgets-groups" id="options-widgets-groups" value="1" '.checked($option['groups'], TRUE, FALSE).' />
-								<label for="options-widgets-groups" class="description">'.__('Display widget options in groups', 'restrict-widgets').'</label>
+								'.__('Display widget options in groups', 'restrict-widgets').'</label>
 							</td>
 						</tr>
 						<tr>
 							<td class="label"><label>'.__('Modify is_active_sidebar()', 'restrict-widgets').'</label></td>
 							<td>
+								<label for="options-widgets-sidebar">
 								<input type="checkbox" name="options-widgets-sidebar" id="options-widgets-sidebar" value="1" '.checked($option['sidebar'], TRUE, FALSE).' />
-								<label for="options-widgets-sidebar" class="description">'.__('By default is_active_sidebar() function returns TRUE even if no widget is displayed in a sidebar. Check this if you want is_active_sidebar() to recognize Restrict Widgets display settings.', 'restrict-widgets').'</label>
+								'.__('By default is_active_sidebar() function returns TRUE even if no widget is displayed in a sidebar. Check this if you want is_active_sidebar() to recognize Restrict Widgets display settings.', 'restrict-widgets').'</label>
 							</td>
 						</tr>
 						<tr>
 							<td class="label"><label>'.__('Plugin Deactivation', 'restrict-widgets').'</label></td>
 							<td>
+								<label for="options-widgets-deactivation">
 								<input type="checkbox" name="options-widgets-deactivation" id="options-widgets-deactivation" value="1" '.checked($option['deactivation'], TRUE, FALSE).' />
-								<label for="options-widgets-deactivation" class="description">'.__('Remove all plugin data on deactivation', 'restrict-widgets').'</label>
+								'.__('Remove all plugin data on deactivation', 'restrict-widgets').'</label>
 							</td>
 						</tr>
 					</table>
