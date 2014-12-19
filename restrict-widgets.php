@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.4
+Version: 1.2.5
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -44,9 +44,9 @@ class Restrict_Widgets
 	private $hidden_widget = '';
 	private $checked_widget = '';
 	private $widgets = array();
-	private $bbpress_active = FALSE;
-	private $polylang_active = FALSE;
-	private $wpml_active = FALSE;
+	private $bbpress_active = false;
+	private $polylang_active = false;
+	private $wpml_active = false;
 
 
 	public function __construct()
@@ -120,8 +120,8 @@ class Restrict_Widgets
 				'available' => array(),
 				'selection' => array(),
 				'sidebars' => array(),
-				'groups' => TRUE,
-				'deactivation' => FALSE,
+				'groups' => true,
+				'deactivation' => false,
 			),
 			'',
 			'no'
@@ -141,7 +141,7 @@ class Restrict_Widgets
 			$current_blog_id = get_current_blog_id();
 			$blogs_ids = $wpdb->get_col($wpdb->prepare('SELECT blog_id FROM '.$wpdb->blogs, ''));
 
-			if(($activated_blogs = get_site_option('restrict_widgets_activated_blogs', FALSE, FALSE)) === FALSE)
+			if(($activated_blogs = get_site_option('restrict_widgets_activated_blogs', false, false)) === false)
 				$activated_blogs = array();
 
 			foreach($blogs_ids as $blog_id)
@@ -149,7 +149,7 @@ class Restrict_Widgets
 				switch_to_blog($blog_id);
 				$this->deactivate_single();
 
-				if(in_array((int)$blog_id, $activated_blogs, TRUE))
+				if(in_array((int)$blog_id, $activated_blogs, true))
 					unset($activated_blogs[array_search($blog_id, $activated_blogs)]);
 			}
 
@@ -168,7 +168,7 @@ class Restrict_Widgets
 	{
 		$option = get_option('rw_widgets_options');
 
-		if($option['deactivation'] === TRUE)
+		if($option['deactivation'] === true)
 		{
 			global $wp_roles, $wp_registered_widgets;
 
@@ -196,7 +196,7 @@ class Restrict_Widgets
 
 
 	/**
-	 * Fix for is_active_sidebar (all hidden widgets on sidebar = FALSE)
+	 * Fix for is_active_sidebar (all hidden widgets on sidebar = false)
 	*/
 	public function restrict_sidebar_widgets()
 	{
@@ -204,7 +204,7 @@ class Restrict_Widgets
 		{
 			$options = get_option('rw_widgets_options');
 
-			if(isset($options['sidebar']) && $options['sidebar'] === TRUE)
+			if(isset($options['sidebar']) && $options['sidebar'] === true)
 			{
 				global $wp_registered_widgets, $_wp_sidebars_widgets;
 
@@ -232,7 +232,7 @@ class Restrict_Widgets
 				{
 					foreach($instance as $widget_id => $widget)
 					{
-						$this->widgets[substr($widget_id, 7)] = $this->restrict_widget($widget, FALSE, array('widget_id' => substr($widget_id, 7)));
+						$this->widgets[substr($widget_id, 7)] = $this->restrict_widget($widget, false, array('widget_id' => substr($widget_id, 7)));
 					}
 				}
 
@@ -248,7 +248,7 @@ class Restrict_Widgets
 							{
 								foreach($s_widgets as $widget)
 								{
-									if($this->widgets[$widget] === FALSE && ($widget_key = array_search($widget, $_wp_sidebars_widgets[$sidebar])) !== FALSE)
+									if($this->widgets[$widget] === false && ($widget_key = array_search($widget, $_wp_sidebars_widgets[$sidebar])) !== false)
 										unset($_wp_sidebars_widgets[$sidebar][$widget_key]);
 								}
 							}
@@ -265,7 +265,7 @@ class Restrict_Widgets
 	*/
 	public function polylang_widgets()
 	{
-		if($this->polylang_active === TRUE)
+		if($this->polylang_active === true)
 		{
 			global $polylang;
 
@@ -280,16 +280,16 @@ class Restrict_Widgets
 	*/
 	public function load_textdomain()
 	{
-		load_plugin_textdomain('restrict-widgets', FALSE, RESTRICT_WIDGETS_REL_PATH.'languages/');
+		load_plugin_textdomain('restrict-widgets', false, RESTRICT_WIDGETS_REL_PATH.'languages/');
 
 		if(class_exists('bbPress'))
-			$this->bbpress_active = TRUE;
+			$this->bbpress_active = true;
 
 		if(class_exists('Polylang'))
-			$this->polylang_active = TRUE;
+			$this->polylang_active = true;
 
 		if(class_exists('SitePress'))
-			$this->wpml_active = TRUE;
+			$this->wpml_active = true;
 	}
 
 
@@ -369,7 +369,7 @@ class Restrict_Widgets
 	{
 		$this->taxonomies = get_taxonomies(
 			array(
-				'_builtin' => FALSE
+				'_builtin' => false
 			),
 			'objects',
 			'and'
@@ -377,14 +377,14 @@ class Restrict_Widgets
 
 		$this->categories = get_categories(
 			array(
-				'hide_empty' => FALSE
+				'hide_empty' => false
 			)
 		);
 
 		$this->custom_post_types = get_post_types(
 			array(
-				'public' => TRUE,
-				'_builtin' => FALSE
+				'public' => true,
+				'_builtin' => false
 			),
 			'objects',
 			'and'
@@ -392,9 +392,9 @@ class Restrict_Widgets
 
 		$this->custom_post_types_archives = get_post_types(
 			array(
-				'public' => TRUE,
-				'_builtin' => FALSE,
-				'has_archive' => TRUE
+				'public' => true,
+				'_builtin' => false,
+				'has_archive' => true
 			),
 			'objects',
 			'and'
@@ -417,7 +417,7 @@ class Restrict_Widgets
 		);
 
 		//bbPress support
-		if($this->bbpress_active === TRUE)
+		if($this->bbpress_active === true)
 		{
 			$this->bbpress = array(
 				'search' => __('Search', 'restrict-widgets'),
@@ -464,9 +464,9 @@ class Restrict_Widgets
 		);
 
 		//Polylang support
-		if($this->polylang_active === TRUE)
+		if($this->polylang_active === true)
 		{
-			$languages = get_terms('language', array('hide_empty' => FALSE));
+			$languages = get_terms('language', array('hide_empty' => false));
 
 			//we need to make WMPL style table
 			foreach($languages as $language)
@@ -475,10 +475,10 @@ class Restrict_Widgets
 			}
 		}
 		//WMPL support
-		elseif($this->wpml_active === TRUE)
+		elseif($this->wpml_active === true)
 			$this->languages = icl_get_languages('skip_missing=0&orderby=native_name&order=asc');
 		else
-			$this->languages = FALSE;
+			$this->languages = false;
 	}
 
 
@@ -514,26 +514,26 @@ class Restrict_Widgets
 				'available' => array(),
 				'selection' => array(),
 				'sidebars' => array(),
-				'groups' => FALSE,
-				'sidebar' => FALSE,
-				'deactivation' => FALSE
+				'groups' => false,
+				'sidebar' => false,
+				'deactivation' => false
 			);
 
 			//display groups?
-			$save_widgets['groups'] = (isset($_POST['options-widgets-groups']) ? TRUE : FALSE);
+			$save_widgets['groups'] = (isset($_POST['options-widgets-groups']) ? true : false);
 
 			//modify is_active_sidebar?
-			$save_widgets['sidebar'] = (isset($_POST['options-widgets-sidebar']) ? TRUE : FALSE);
+			$save_widgets['sidebar'] = (isset($_POST['options-widgets-sidebar']) ? true : false);
 
 			//remove plugin data?
-			$save_widgets['deactivation'] = (isset($_POST['options-widgets-deactivation']) ? TRUE : FALSE);
+			$save_widgets['deactivation'] = (isset($_POST['options-widgets-deactivation']) ? true : false);
 
 			//do we have some available widgets?
 			if(isset($_POST['options-available-widgets']))
 			{
 				foreach($_POST['options-available-widgets'] as $widget_class)
 				{
-					$save_widgets['available'][$widget_class] = TRUE;
+					$save_widgets['available'][$widget_class] = true;
 				}
 			}
 
@@ -547,58 +547,58 @@ class Restrict_Widgets
 				{
 					$tmp = explode('_', $element, 2);
 
-					if(in_array($tmp[0], array('cpt', 'cpta'), TRUE))
-						$save_widgets['selection'][$tmp[0] === 'cpt' ? 'custom_post_types' : 'custom_post_types_archives'][$tmp[0].'_'.sanitize_key($tmp[1])] = TRUE;
+					if(in_array($tmp[0], array('cpt', 'cpta'), true))
+						$save_widgets['selection'][$tmp[0] === 'cpt' ? 'custom_post_types' : 'custom_post_types_archives'][$tmp[0].'_'.sanitize_key($tmp[1])] = true;
 				}
 
 				foreach($this->pages as $page)
 				{
-					if(in_array('pageid_'.$page->ID, $selected, TRUE))
-						$save_widgets['selection']['pages']['pageid_'.$page->ID] = TRUE;
+					if(in_array('pageid_'.$page->ID, $selected, true))
+						$save_widgets['selection']['pages']['pageid_'.$page->ID] = true;
 				}
 
 				foreach($this->custom_post_types as $cpt)
 				{
-					if(in_array('cpt_'.$cpt->name, $selected, TRUE))
-						$save_widgets['selection']['custom_post_types']['cpt_'.$cpt->name] = TRUE;
+					if(in_array('cpt_'.$cpt->name, $selected, true))
+						$save_widgets['selection']['custom_post_types']['cpt_'.$cpt->name] = true;
 				}
 
 				foreach($this->categories as $category)
 				{
-					if(in_array('category_'.$category->cat_ID, $selected, TRUE))
-						$save_widgets['selection']['categories']['category_'.$category->cat_ID] = TRUE;
+					if(in_array('category_'.$category->cat_ID, $selected, true))
+						$save_widgets['selection']['categories']['category_'.$category->cat_ID] = true;
 				}
 
 				foreach($this->taxonomies as $taxonomy)
 				{
-					if(in_array('taxonomy_'.$taxonomy->name, $selected, TRUE))
-						$save_widgets['selection']['taxonomies']['taxonomy_'.$taxonomy->name] = TRUE;
+					if(in_array('taxonomy_'.$taxonomy->name, $selected, true))
+						$save_widgets['selection']['taxonomies']['taxonomy_'.$taxonomy->name] = true;
 				}
 
 				foreach($this->others as $key => $value)
 				{
-					if(in_array('others_'.$key, $selected, TRUE))
-						$save_widgets['selection']['others']['others_'.$key] = TRUE;
+					if(in_array('others_'.$key, $selected, true))
+						$save_widgets['selection']['others']['others_'.$key] = true;
 				}
 
 				foreach($this->users as $key => $value)
 				{
-					if(in_array('users_'.$key, $selected, TRUE))
-						$save_widgets['selection']['users']['users_'.$key] = TRUE;
+					if(in_array('users_'.$key, $selected, true))
+						$save_widgets['selection']['users']['users_'.$key] = true;
 				}
 
 				foreach($this->devices as $key => $value)
 				{
-					if(in_array('devices_'.$key, $selected, TRUE))
-						$save_widgets['selection']['devices']['devices_'.$key] = TRUE;
+					if(in_array('devices_'.$key, $selected, true))
+						$save_widgets['selection']['devices']['devices_'.$key] = true;
 				}
 
-				if($this->bbpress_active === TRUE)
+				if($this->bbpress_active === true)
 				{
 					foreach($this->bbpress as $key => $value)
 					{
-						if(in_array('bbpress_'.$key, $selected, TRUE))
-							$save_widgets['selection']['bbpress']['bbpress_'.$key] = TRUE;
+						if(in_array('bbpress_'.$key, $selected, true))
+							$save_widgets['selection']['bbpress']['bbpress_'.$key] = true;
 					}
 				}
 			}
@@ -608,7 +608,7 @@ class Restrict_Widgets
 			{
 				foreach($_POST['options-widgets-sidebars'] as $sidebar)
 				{
-					$save_widgets['sidebars'][$sidebar] = TRUE;
+					$save_widgets['sidebars'][$sidebar] = true;
 				}
 			}
 
@@ -646,8 +646,8 @@ class Restrict_Widgets
 		$widgets_unique = array();
 		$option = get_option('rw_widgets_options');
 
-		if(isset($option['groups']) === FALSE) $option['groups'] = FALSE;
-		if(isset($option['deactivation']) === FALSE) $option['deactivation'] = FALSE;
+		if(isset($option['groups']) === false) $option['groups'] = false;
+		if(isset($option['deactivation']) === false) $option['deactivation'] = false;
 
 		//we need to make a copy for sorting
 		$widgets = $wp_registered_widgets;
@@ -673,28 +673,28 @@ class Restrict_Widgets
 				</div>
 				<form action="" method="post">
 
-					<label class="label">'.__('Restrict Users', 'restrict-widgets').'</label><br />
+					<label>'.__('Restrict Users', 'restrict-widgets').'</label><br />
 					<select name="options-widgets-roles[]" id="options-widgets-roles" multiple="multiple">';
 
 						foreach($wp_roles->roles as $role_name => $role_array)
 						{
-							echo '<option value="'.$role_name.'" '.selected((in_array('manage_widgets', array_keys($role_array['capabilities']), TRUE) ? TRUE : FALSE), TRUE, FALSE).' '.disabled(($role_name === 'administrator' ? TRUE : FALSE), TRUE, FALSE).'>'.$role_array['name'].'</option>';
+							echo '<option value="'.$role_name.'" '.selected((in_array('manage_widgets', array_keys($role_array['capabilities']), true) ? true : false), true, false).' '.disabled(($role_name === 'administrator' ? true : false), true, false).'>'.$role_array['name'].'</option>';
 						}
 			
 					echo '
 					</select>
 
-					<label class="label">'.__('Restrict Sidebars', 'restrict-widgets').'</label><br />
+					<label>'.__('Restrict Sidebars', 'restrict-widgets').'</label><br />
 					<select name="options-widgets-sidebars[]" id="options-widgets-sidebars" multiple="multiple">';
 
 						foreach($wp_registered_sidebars as $sidebar)
 						{
 							if($sidebar['id'] !== 'wp_inactive_widgets')
 							{
-								if(isset($option['sidebars'][$sidebar['id']]) === FALSE)
-									$option['sidebars'][$sidebar['id']] = FALSE;
+								if(isset($option['sidebars'][$sidebar['id']]) === false)
+									$option['sidebars'][$sidebar['id']] = false;
 				
-								echo '<option value="'.$sidebar['id'].'" '.selected($option['sidebars'][$sidebar['id']], TRUE, FALSE).'>'.$sidebar['name'].'</option>';
+								echo '<option value="'.$sidebar['id'].'" '.selected($option['sidebars'][$sidebar['id']], true, false).'>'.$sidebar['name'].'</option>';
 							}
 						}
 
@@ -703,22 +703,22 @@ class Restrict_Widgets
 						<p class="description">'.__('Select which sidebars will be restricted to admins only.', 'restrict-widgets').'</p>';
 					
 					echo '
-						<label class="label">'.__('Restrict Widgets', 'restrict-widgets').'</label><br />
+						<label>'.__('Restrict Widgets', 'restrict-widgets').'</label><br />
 						<select name="options-available-widgets[]" id="options-available-widgets" multiple="multiple">';
 					
 							foreach(array_unique($widgets_unique) as $widget_class => $widget_name)
 							{
-								if(isset($option['available'][$widget_class]) === FALSE)
-									$option['available'][$widget_class] = FALSE;
+								if(isset($option['available'][$widget_class]) === false)
+									$option['available'][$widget_class] = false;
 					
-								echo '<option value="'.$widget_class.'" '.selected($option['available'][$widget_class], TRUE, FALSE).'>'.$widget_name.'</option>';
+								echo '<option value="'.$widget_class.'" '.selected($option['available'][$widget_class], true, false).'>'.$widget_name.'</option>';
 							}
 
 					echo '
 						</select>
 						<p class="description">'.__('Select which widgets will be restricted to admins only.', 'restrict-widgets').'</p>
 						
-						<label class="label">'.__('Restrict Widget Options', 'restrict-widgets').'</label><br />
+						<label>'.__('Restrict Widget Options', 'restrict-widgets').'</label><br />
 						<select name="options-widgets-selection[]" id="options-widgets-selection" multiple="multiple">';
 
 							foreach($this->options as $group_name => $value)
@@ -731,27 +731,27 @@ class Restrict_Widgets
 								<p class="description">'.__('Select which widget options will be restricted to admins only.', 'restrict-widgets').'</p>
 					<table>
 						<tr>
-							<td class="label"><label>'.__('Restrict Option Groups', 'restrict-widgets').'</label></td>
+							<td><label>'.__('Restrict Option Groups', 'restrict-widgets').'</label></td>
 							<td>
 								<label for="options-widgets-groups">
-								<input type="checkbox" name="options-widgets-groups" id="options-widgets-groups" value="1" '.checked($option['groups'], TRUE, FALSE).' />
-								'.__('Display widget options in groups', 'restrict-widgets').'</label>
+								<input type="checkbox" name="options-widgets-groups" id="options-widgets-groups" value="1" '.checked($option['groups'], true, false).' />
+								<span class="description">'.__('Display widget options in groups', 'restrict-widgets').'</span></label>
 							</td>
 						</tr>
 						<tr>
-							<td class="label"><label>'.__('Modify is_active_sidebar()', 'restrict-widgets').'</label></td>
+							<td><label>'.__('Modify is_active_sidebar()', 'restrict-widgets').'</label></td>
 							<td>
 								<label for="options-widgets-sidebar">
-								<input type="checkbox" name="options-widgets-sidebar" id="options-widgets-sidebar" value="1" '.checked($option['sidebar'], TRUE, FALSE).' />
-								'.__('By default is_active_sidebar() function returns TRUE even if no widget is displayed in a sidebar. Check this if you want is_active_sidebar() to recognize Restrict Widgets display settings.', 'restrict-widgets').'</label>
+								<input type="checkbox" name="options-widgets-sidebar" id="options-widgets-sidebar" value="1" '.checked(isset($option['sidebar']) ? $option['sidebar'] : false, true, false).' />
+								<span class="description">'.__('By default is_active_sidebar() function returns true even if no widget is displayed in a sidebar. Check this if you want is_active_sidebar() to recognize Restrict Widgets display settings.', 'restrict-widgets').'</span></label>
 							</td>
 						</tr>
 						<tr>
-							<td class="label"><label>'.__('Plugin Deactivation', 'restrict-widgets').'</label></td>
+							<td><label>'.__('Plugin Deactivation', 'restrict-widgets').'</label></td>
 							<td>
 								<label for="options-widgets-deactivation">
-								<input type="checkbox" name="options-widgets-deactivation" id="options-widgets-deactivation" value="1" '.checked($option['deactivation'], TRUE, FALSE).' />
-								'.__('Remove all plugin data on deactivation', 'restrict-widgets').'</label>
+								<input type="checkbox" name="options-widgets-deactivation" id="options-widgets-deactivation" value="1" '.checked($option['deactivation'], true, false).' />
+								<span class="description">'.__('Remove all plugin data on deactivation', 'restrict-widgets').'</span></label>
 							</td>
 						</tr>
 					</table>
@@ -858,7 +858,7 @@ class Restrict_Widgets
 
 		wp_enqueue_style(
 			'chosen',
-			RESTRICT_WIDGETS_URL.'/css/chosen.css'
+			RESTRICT_WIDGETS_URL.'/css/chosen.min.css'
 		);
 
 		wp_enqueue_style(
@@ -880,7 +880,7 @@ class Restrict_Widgets
 		{
 			case 'pages':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['pages'].'">';
 
 				foreach($this->pages as $page)
@@ -889,10 +889,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['pages']['pageid_'.$page->ID]) === FALSE)
-								$option['selection']['pages']['pageid_'.$page->ID] = FALSE;
+							if(isset($option['selection']['pages']['pageid_'.$page->ID]) === false)
+								$option['selection']['pages']['pageid_'.$page->ID] = false;
 
-							$html .= '<option value="pageid_'.$page->ID.'" '.selected($option['selection']['pages']['pageid_'.$page->ID], TRUE, FALSE).'>'.$page->post_title.'</option>';
+							$html .= '<option value="pageid_'.$page->ID.'" '.selected($option['selection']['pages']['pageid_'.$page->ID], true, false).'>'.$page->post_title.'</option>';
 
 							break;
 						}
@@ -900,10 +900,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['pages']['pageid_'.$page->ID]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['pageid_'.$page->ID]) === FALSE)
+								if(isset($instance['rw_opt']['pageid_'.$page->ID]) === false)
 									$instance['rw_opt']['pageid_'.$page->ID] = 0;
 
-								$html .= '<option value="pageid_'.$page->ID.'" '.selected($instance['rw_opt']['pageid_'.$page->ID], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $page->post_title, 'page').'</option>';
+								$html .= '<option value="pageid_'.$page->ID.'" '.selected($instance['rw_opt']['pageid_'.$page->ID], true, false).'>'.apply_filters('rw_option_display_name', $page->post_title, 'page').'</option>';
 							}
 
 							break;
@@ -911,14 +911,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'custom_post_types':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['custom_post_types'].'">';
 
 				foreach($this->custom_post_types as $cpt)
@@ -927,10 +927,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['custom_post_types']['cpt_'.$cpt->name]) === FALSE)
-								$option['selection']['custom_post_types']['cpt_'.$cpt->name] = FALSE;
+							if(isset($option['selection']['custom_post_types']['cpt_'.$cpt->name]) === false)
+								$option['selection']['custom_post_types']['cpt_'.$cpt->name] = false;
 
-							$html .= '<option value="cpt_'.$cpt->name.'" '.selected($option['selection']['custom_post_types']['cpt_'.$cpt->name], TRUE, FALSE).'>'.sprintf(__('Single %s','restrict-widgets'), $cpt->label).'</option>';
+							$html .= '<option value="cpt_'.$cpt->name.'" '.selected($option['selection']['custom_post_types']['cpt_'.$cpt->name], true, false).'>'.sprintf(__('Single %s','restrict-widgets'), $cpt->label).'</option>';
 
 							break;
 						}
@@ -938,10 +938,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['custom_post_types']['cpt_'.$cpt->name]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['cpt_'.$cpt->name]) === FALSE)
+								if(isset($instance['rw_opt']['cpt_'.$cpt->name]) === false)
 									$instance['rw_opt']['cpt_'.$cpt->name] = 0;
 
-								$html .= '<option value="cpt_'.$cpt->name.'" '.selected($instance['rw_opt']['cpt_'.$cpt->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', sprintf(__('Single %s','restrict-widgets'), $cpt->label), 'custom_post_type').'</option>';
+								$html .= '<option value="cpt_'.$cpt->name.'" '.selected($instance['rw_opt']['cpt_'.$cpt->name], true, false).'>'.apply_filters('rw_option_display_name', sprintf(__('Single %s','restrict-widgets'), $cpt->label), 'custom_post_type').'</option>';
 							}
 
 							break;
@@ -949,14 +949,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'custom_post_types_archives':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['custom_post_types_archives'].'">';
 
 				foreach($this->custom_post_types_archives as $cpta)
@@ -965,10 +965,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['custom_post_types_archives']['cpta_'.$cpta->name]) === FALSE)
-								$option['selection']['custom_post_types_archives']['cpta_'.$cpta->name] = FALSE;
+							if(isset($option['selection']['custom_post_types_archives']['cpta_'.$cpta->name]) === false)
+								$option['selection']['custom_post_types_archives']['cpta_'.$cpta->name] = false;
 
-							$html .= '<option value="cpta_'.$cpta->name.'" '.selected($option['selection']['custom_post_types_archives']['cpta_'.$cpta->name], TRUE, FALSE).'>'.sprintf(__('%s Archive','restrict-widgets'), $cpta->label).'</option>';
+							$html .= '<option value="cpta_'.$cpta->name.'" '.selected($option['selection']['custom_post_types_archives']['cpta_'.$cpta->name], true, false).'>'.sprintf(__('%s Archive','restrict-widgets'), $cpta->label).'</option>';
 
 							break;
 						}
@@ -976,10 +976,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['custom_post_types_archives']['cpta_'.$cpta->name]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['cpta_'.$cpta->name]) === FALSE)
+								if(isset($instance['rw_opt']['cpta_'.$cpta->name]) === false)
 									$instance['rw_opt']['cpta_'.$cpta->name] = 0;
 
-								$html .= '<option value="cpta_'.$cpta->name.'" '.selected($instance['rw_opt']['cpta_'.$cpta->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', sprintf(__('%s Archive','restrict-widgets'), $cpta->label), 'custom_post_type_archive').'</option>';
+								$html .= '<option value="cpta_'.$cpta->name.'" '.selected($instance['rw_opt']['cpta_'.$cpta->name], true, false).'>'.apply_filters('rw_option_display_name', sprintf(__('%s Archive','restrict-widgets'), $cpta->label), 'custom_post_type_archive').'</option>';
 							}
 
 							break;
@@ -987,14 +987,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'categories':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['categories'].'">';
 
 				foreach($this->categories as $category)
@@ -1003,10 +1003,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['categories']['category_'.$category->cat_ID]) === FALSE)
-								$option['selection']['categories']['category_'.$category->cat_ID] = FALSE;
+							if(isset($option['selection']['categories']['category_'.$category->cat_ID]) === false)
+								$option['selection']['categories']['category_'.$category->cat_ID] = false;
 
-							$html .= '<option value="category_'.$category->cat_ID.'" '.selected($option['selection']['categories']['category_'.$category->cat_ID], TRUE, FALSE).'>'.$category->cat_name.'</option>';
+							$html .= '<option value="category_'.$category->cat_ID.'" '.selected($option['selection']['categories']['category_'.$category->cat_ID], true, false).'>'.$category->cat_name.'</option>';
 
 							break;
 						}
@@ -1014,10 +1014,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['categories']['category_'.$category->cat_ID]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['category_'.$category->cat_ID]) === FALSE)
+								if(isset($instance['rw_opt']['category_'.$category->cat_ID]) === false)
 									$instance['rw_opt']['category_'.$category->cat_ID] = 0;
 
-								$html .= '<option value="category_'.$category->cat_ID.'" '.selected($instance['rw_opt']['category_'.$category->cat_ID], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $category->cat_name, 'category').'</option>';
+								$html .= '<option value="category_'.$category->cat_ID.'" '.selected($instance['rw_opt']['category_'.$category->cat_ID], true, false).'>'.apply_filters('rw_option_display_name', $category->cat_name, 'category').'</option>';
 							}
 
 							break;
@@ -1025,14 +1025,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'taxonomies':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['taxonomies'].'">';
 
 				foreach($this->taxonomies as $taxonomy)
@@ -1041,10 +1041,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['taxonomies']['taxonomy_'.$taxonomy->name]) === FALSE)
-								$option['selection']['taxonomies']['taxonomy_'.$taxonomy->name] = FALSE;
+							if(isset($option['selection']['taxonomies']['taxonomy_'.$taxonomy->name]) === false)
+								$option['selection']['taxonomies']['taxonomy_'.$taxonomy->name] = false;
 
-							$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($option['selection']['taxonomies']['taxonomy_'.$taxonomy->name], TRUE, FALSE).'>'.$taxonomy->label.'</option>';
+							$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($option['selection']['taxonomies']['taxonomy_'.$taxonomy->name], true, false).'>'.$taxonomy->label.'</option>';
 
 							break;
 						}
@@ -1052,10 +1052,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['taxonomies']['taxonomy_'.$taxonomy->name]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['taxonomy_'.$taxonomy->name]) === FALSE)
+								if(isset($instance['rw_opt']['taxonomy_'.$taxonomy->name]) === false)
 									$instance['rw_opt']['taxonomy_'.$taxonomy->name] = 0;
 
-								$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($instance['rw_opt']['taxonomy_'.$taxonomy->name], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $taxonomy->label, 'taxonomy').'</option>';
+								$html .= '<option value="taxonomy_'.$taxonomy->name.'" '.selected($instance['rw_opt']['taxonomy_'.$taxonomy->name], true, false).'>'.apply_filters('rw_option_display_name', $taxonomy->label, 'taxonomy').'</option>';
 							}
 
 							break;
@@ -1063,14 +1063,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'others':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['others'].'">';
 
 				foreach($this->others as $key => $value)
@@ -1079,10 +1079,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['others']['others_'.$key]) === FALSE)
-								$option['selection']['others']['others_'.$key] = FALSE;
+							if(isset($option['selection']['others']['others_'.$key]) === false)
+								$option['selection']['others']['others_'.$key] = false;
 
-							$html .= '<option value="others_'.$key.'" '.selected($option['selection']['others']['others_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+							$html .= '<option value="others_'.$key.'" '.selected($option['selection']['others']['others_'.$key], true, false).'>'.$value.'</option>';
 
 							break;
 						}
@@ -1090,10 +1090,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['others']['others_'.$key]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['others_'.$key]) === FALSE)
+								if(isset($instance['rw_opt']['others_'.$key]) === false)
 									$instance['rw_opt']['others_'.$key] = 0;
 
-								$html .= '<option value="others_'.$key.'" '.selected($instance['rw_opt']['others_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'other').'</option>';
+								$html .= '<option value="others_'.$key.'" '.selected($instance['rw_opt']['others_'.$key], true, false).'>'.apply_filters('rw_option_display_name', $value, 'other').'</option>';
 							}
 
 							break;
@@ -1101,14 +1101,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'devices':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['devices'].'">';
 
 				foreach($this->devices as $key => $value)
@@ -1117,10 +1117,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['devices']['devices_'.$key]) === FALSE)
-								$option['selection']['devices']['devices_'.$key] = FALSE;
+							if(isset($option['selection']['devices']['devices_'.$key]) === false)
+								$option['selection']['devices']['devices_'.$key] = false;
 
-							$html .= '<option value="devices_'.$key.'" '.selected($option['selection']['devices']['devices_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+							$html .= '<option value="devices_'.$key.'" '.selected($option['selection']['devices']['devices_'.$key], true, false).'>'.$value.'</option>';
 
 							break;
 						}
@@ -1128,10 +1128,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['devices']['devices_'.$key]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['devices_'.$key]) === FALSE)
+								if(isset($instance['rw_opt']['devices_'.$key]) === false)
 									$instance['rw_opt']['devices_'.$key] = 0;
 
-								$html .= '<option value="devices_'.$key.'" '.selected($instance['rw_opt']['devices_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'device').'</option>';
+								$html .= '<option value="devices_'.$key.'" '.selected($instance['rw_opt']['devices_'.$key], true, false).'>'.apply_filters('rw_option_display_name', $value, 'device').'</option>';
 							}
 
 							break;
@@ -1139,17 +1139,17 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'bbpress':
 			{
-				if($this->bbpress_active === FALSE)
+				if($this->bbpress_active === false)
 					return $html;
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['bbpress'].'">';
 
 				foreach($this->bbpress as $key => $value)
@@ -1158,10 +1158,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['bbpress']['bbpress_'.$key]) === FALSE)
-								$option['selection']['bbpress']['bbpress_'.$key] = FALSE;
+							if(isset($option['selection']['bbpress']['bbpress_'.$key]) === false)
+								$option['selection']['bbpress']['bbpress_'.$key] = false;
 
-							$html .= '<option value="bbpress_'.$key.'" '.selected($option['selection']['bbpress']['bbpress_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+							$html .= '<option value="bbpress_'.$key.'" '.selected($option['selection']['bbpress']['bbpress_'.$key], true, false).'>'.$value.'</option>';
 
 							break;
 						}
@@ -1169,10 +1169,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['bbpress']['bbpress_'.$key]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['bbpress_'.$key]) === FALSE)
+								if(isset($instance['rw_opt']['bbpress_'.$key]) === false)
 									$instance['rw_opt']['bbpress_'.$key] = 0;
 
-								$html .= '<option value="bbpress_'.$key.'" '.selected($instance['rw_opt']['bbpress_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'bbpress').'</option>';
+								$html .= '<option value="bbpress_'.$key.'" '.selected($instance['rw_opt']['bbpress_'.$key], true, false).'>'.apply_filters('rw_option_display_name', $value, 'bbpress').'</option>';
 							}
 
 							break;
@@ -1180,14 +1180,14 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'users':
 			{
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['users'].'">';
 
 				foreach($this->users as $key => $value)
@@ -1196,10 +1196,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['users']['users_'.$key]) === FALSE)
-								$option['selection']['users']['users_'.$key] = FALSE;
+							if(isset($option['selection']['users']['users_'.$key]) === false)
+								$option['selection']['users']['users_'.$key] = false;
 
-							$html .= '<option value="users_'.$key.'" '.selected($option['selection']['users']['users_'.$key], TRUE, FALSE).'>'.$value.'</option>';
+							$html .= '<option value="users_'.$key.'" '.selected($option['selection']['users']['users_'.$key], true, false).'>'.$value.'</option>';
 
 							break;
 						}
@@ -1207,10 +1207,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['users']['users_'.$key]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['users_'.$key]) === FALSE)
+								if(isset($instance['rw_opt']['users_'.$key]) === false)
 									$instance['rw_opt']['users_'.$key] = 0;
 
-								$html .= '<option value="users_'.$key.'" '.selected($instance['rw_opt']['users_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $value, 'user').'</option>';
+								$html .= '<option value="users_'.$key.'" '.selected($instance['rw_opt']['users_'.$key], true, false).'>'.apply_filters('rw_option_display_name', $value, 'user').'</option>';
 							}
 
 							break;
@@ -1218,17 +1218,17 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
 			}
 			case 'languages':
 			{
-				if($this->languages === FALSE)
+				if($this->languages === false)
 					return $html;
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '<optgroup label="'.$this->options['languages'].'">';
 
 				foreach($this->languages as $key => $language)
@@ -1237,10 +1237,10 @@ class Restrict_Widgets
 					{
 						case 'option':
 						{
-							if(isset($option['selection']['languages']['language_'.$key]) === FALSE)
-								$option['selection']['languages']['language_'.$key] = FALSE;
+							if(isset($option['selection']['languages']['language_'.$key]) === false)
+								$option['selection']['languages']['language_'.$key] = false;
 
-							$html .= '<option value="language_'.$key.'" '.selected($option['selection']['languages']['language_'.$key], TRUE, FALSE).'>'.$language['native_name'].'</option>';
+							$html .= '<option value="language_'.$key.'" '.selected($option['selection']['languages']['language_'.$key], true, false).'>'.$language['native_name'].'</option>';
 
 							break;
 						}
@@ -1248,10 +1248,10 @@ class Restrict_Widgets
 						{
 							if(!isset($rw_option['selection']['languages']['language_'.$key]) || current_user_can('manage_options'))
 							{
-								if(isset($instance['rw_opt']['language_'.$key]) === FALSE)
+								if(isset($instance['rw_opt']['language_'.$key]) === false)
 									$instance['rw_opt']['language_'.$key] = 0;
 
-								$html .= '<option value="language_'.$key.'" '.selected($instance['rw_opt']['language_'.$key], TRUE, FALSE).'>'.apply_filters('rw_option_display_name', $language['native_name'], 'language').'</option>';
+								$html .= '<option value="language_'.$key.'" '.selected($instance['rw_opt']['language_'.$key], true, false).'>'.apply_filters('rw_option_display_name', $language['native_name'], 'language').'</option>';
 							}
 
 							break;
@@ -1259,7 +1259,7 @@ class Restrict_Widgets
 					}
 				}
 
-				if(($rw_option['groups'] === TRUE && $type === 'widget') || current_user_can('manage_options'))
+				if(($rw_option['groups'] === true && $type === 'widget') || current_user_can('manage_options'))
 					$html .= '</optgroup>';
 
 				return $html;
@@ -1273,19 +1273,19 @@ class Restrict_Widgets
 	*/
 	public function display_admin_widgets_options($widget, $empty, $instance)
 	{
-		if(isset($instance['rw_opt']['widget_select']) === FALSE)
-			$instance['rw_opt']['widget_select'] = FALSE;
+		if(isset($instance['rw_opt']['widget_select']) === false)
+			$instance['rw_opt']['widget_select'] = false;
 
 		echo '
 		<div class="restrict-widgets-hide-div restrict-widgets">
 			<p class="restrict-widgets-display-label">'.__('Display / Hide Widget', 'restrict-widgets').'</p>
-			<select name="'.$widget->get_field_name('widget_select').'" class="restrict-widgets-hide">
-				<option value="yes" '.selected($instance['rw_opt']['widget_select'], TRUE, FALSE).'>'.__('Display widget on selected', 'restrict-widgets').'</option>
-				<option value="no" '.selected($instance['rw_opt']['widget_select'], FALSE, FALSE).'>'.__('Hide widget on selected', 'restrict-widgets').'</option>
+			<select name="'.$widget->get_field_name('widget_select').'" class="restrict-widgets-hide chosen-select">
+				<option value="yes" '.selected($instance['rw_opt']['widget_select'], true, false).'>'.__('Display widget on selected', 'restrict-widgets').'</option>
+				<option value="no" '.selected($instance['rw_opt']['widget_select'], false, false).'>'.__('Hide widget on selected', 'restrict-widgets').'</option>
 			</select>
 		</div>
 		<div class="restrict-widgets-select-div restrict-widgets">
-			<select class="restrict-widgets-select" multiple="multiple" size="10" name="'.$widget->get_field_name('widget_multiselect').'[]">';
+			<select class="restrict-widgets-select chosen-select" multiple="multiple" size="10" name="'.$widget->get_field_name('widget_multiselect').'[]">';
 
 		foreach($this->options as $option => $text)
 		{
@@ -1311,7 +1311,7 @@ class Restrict_Widgets
 			foreach($this->pages as $page)
 			{
 				if(in_array('pageid_'.$page->ID, $selected))
-					$instance['rw_opt']['pageid_'.$page->ID] = TRUE;
+					$instance['rw_opt']['pageid_'.$page->ID] = true;
 				else
 					unset($instance['rw_opt']['pageid_'.$page->ID]);
 			}
@@ -1320,7 +1320,7 @@ class Restrict_Widgets
 			foreach($this->custom_post_types as $cpt)
 			{
 				if(in_array('cpt_'.$cpt->name, $selected))
-					$instance['rw_opt']['cpt_'.$cpt->name] = TRUE;
+					$instance['rw_opt']['cpt_'.$cpt->name] = true;
 				else
 					unset($instance['rw_opt']['cpt_'.$cpt->name]);
 			}
@@ -1329,7 +1329,7 @@ class Restrict_Widgets
 			foreach($this->custom_post_types_archives as $cpta)
 			{
 				if(in_array('cpta_'.$cpta->name, $selected))
-					$instance['rw_opt']['cpta_'.$cpta->name] = TRUE;
+					$instance['rw_opt']['cpta_'.$cpta->name] = true;
 				else
 					unset($instance['rw_opt']['cpta_'.$cpta->name]);
 			}
@@ -1338,7 +1338,7 @@ class Restrict_Widgets
 			foreach($this->categories as $category)
 			{
 				if(in_array('category_'.$category->cat_ID, $selected))
-					$instance['rw_opt']['category_'.$category->cat_ID] = TRUE;
+					$instance['rw_opt']['category_'.$category->cat_ID] = true;
 				else
 					unset($instance['rw_opt']['category_'.$category->cat_ID]);
 			}
@@ -1347,7 +1347,7 @@ class Restrict_Widgets
 			foreach($this->taxonomies as $taxonomy)
 			{
 				if(in_array('taxonomy_'.$taxonomy->name, $selected))
-					$instance['rw_opt']['taxonomy_'.$taxonomy->name] = TRUE;
+					$instance['rw_opt']['taxonomy_'.$taxonomy->name] = true;
 				else
 					unset($instance['rw_opt']['taxonomy_'.$taxonomy->name]);
 			}
@@ -1356,7 +1356,7 @@ class Restrict_Widgets
 			foreach($this->others as $key => $value)
 			{
 				if(in_array('others_'.$key, $selected))
-					$instance['rw_opt']['others_'.$key] = TRUE;
+					$instance['rw_opt']['others_'.$key] = true;
 				else
 					unset($instance['rw_opt']['others_'.$key]);
 			}
@@ -1365,18 +1365,18 @@ class Restrict_Widgets
 			foreach($this->devices as $key => $value)
 			{
 				if(in_array('devices_'.$key, $selected))
-					$instance['rw_opt']['devices_'.$key] = TRUE;
+					$instance['rw_opt']['devices_'.$key] = true;
 				else
 					unset($instance['rw_opt']['devices_'.$key]);
 			}
 
 			//bbpress
-			if($this->bbpress_active === TRUE)
+			if($this->bbpress_active === true)
 			{
 				foreach($this->bbpress as $key => $value)
 				{
 					if(in_array('bbpress_'.$key, $selected))
-						$instance['rw_opt']['bbpress_'.$key] = TRUE;
+						$instance['rw_opt']['bbpress_'.$key] = true;
 					else
 						unset($instance['rw_opt']['bbpress_'.$key]);
 				}
@@ -1386,18 +1386,18 @@ class Restrict_Widgets
 			foreach($this->users as $key => $value)
 			{
 				if(in_array('users_'.$key, $selected))
-					$instance['rw_opt']['users_'.$key] = TRUE;
+					$instance['rw_opt']['users_'.$key] = true;
 				else
 					unset($instance['rw_opt']['users_'.$key]);
 			}
 
 			//languages
-			if($this->languages !== FALSE)
+			if($this->languages !== false)
 			{
 				foreach($this->languages as $key => $value)
 				{
 					if(in_array('language_'.$key, $selected))
-						$instance['rw_opt']['language_'.$key] = TRUE;
+						$instance['rw_opt']['language_'.$key] = true;
 					else
 						unset($instance['rw_opt']['language_'.$key]);
 				}
@@ -1407,7 +1407,7 @@ class Restrict_Widgets
 		else unset($instance['rw_opt']);
 
 		//widget_multiselect
-		$instance['rw_opt']['widget_select'] = ($new_instance['widget_select'] === 'yes' ? TRUE : FALSE);
+		$instance['rw_opt']['widget_select'] = ($new_instance['widget_select'] === 'yes' ? true : false);
 
 		return $instance;
 	}
@@ -1431,11 +1431,11 @@ class Restrict_Widgets
 					$array = array('users');
 
 				if(in_array($action[0], $array))
-					return FALSE;
+					return false;
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 
 
@@ -1444,31 +1444,31 @@ class Restrict_Widgets
 	*/
 	public function display_frontend_widgets($instance, $class, $args)
 	{
-		return $this->restrict_widget($instance, TRUE, $args);
+		return $this->restrict_widget($instance, true, $args);
 	}
 
 
 	/**
 	 * Displays or hides specific widget
 	*/
-	private function restrict_widget($instance, $filter = TRUE, $args = array())
+	private function restrict_widget($instance, $filter = true, $args = array())
 	{
 		global $wp_query;
 
 		$display_lang = $display_user = $display_device = $display_main = '';
-		$empty_lang = $empty_user = $empty_device = $empty_main = TRUE;
-		$return = FALSE;
+		$empty_lang = $empty_user = $empty_device = $empty_main = true;
+		$return = false;
 
 		$post_id = $wp_query->get_queried_object_id();
 		
-		$display_type = isset($instance['rw_opt']['widget_select']) ? $instance['rw_opt']['widget_select'] : FALSE;
+		$display_type = isset($instance['rw_opt']['widget_select']) ? $instance['rw_opt']['widget_select'] : false;
 
 		//languages
-		if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'lang') === FALSE)
+		if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'lang') === false)
 		{
-			if($this->polylang_active === TRUE || $this->wpml_active === TRUE)
+			if($this->polylang_active === true || $this->wpml_active === true)
 			{
-				$empty_lang = FALSE;
+				$empty_lang = false;
 
 				//fix for WPML
 				if(function_exists('icl_object_id'))
@@ -1476,137 +1476,137 @@ class Restrict_Widgets
 					global $sitepress;
 
 					if(isset($sitepress))
-						$post_id = icl_object_id($post_id, 'page', TRUE, $sitepress->get_default_language());
+						$post_id = icl_object_id($post_id, 'page', true, $sitepress->get_default_language());
 					else
-						$post_id = icl_object_id($post_id, 'page', FALSE);
+						$post_id = icl_object_id($post_id, 'page', false);
 				}
 
-				$found_lang = (defined('ICL_LANGUAGE_CODE') && isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? TRUE : FALSE);
+				$found_lang = (defined('ICL_LANGUAGE_CODE') && isset($instance['rw_opt']['language_'.ICL_LANGUAGE_CODE]) ? true : false);
 
-				if($display_type === TRUE)
+				if($display_type === true)
 				{
-					if($found_lang === TRUE)
-						$display_lang = TRUE;
+					if($found_lang === true)
+						$display_lang = true;
 					else
 					{
-						$return = TRUE;
-						$display_lang = FALSE;
+						$return = true;
+						$display_lang = false;
 					}
 				}
 				else
-					$display_lang = ($found_lang === TRUE ? FALSE : TRUE);
+					$display_lang = ($found_lang === true ? false : true);
 			}
 			else
-				$display_lang = TRUE;
+				$display_lang = true;
 		}
 		else
-			$display_lang = TRUE;
+			$display_lang = true;
 
 		//users
-		if($return === FALSE)
+		if($return === false)
 		{
-			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'user') === FALSE)
+			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'user') === false)
 			{
-				$empty_user = FALSE;
+				$empty_user = false;
 
 				if(is_user_logged_in())
 				{
 					if(isset($instance['rw_opt']['users_logged_in'], $instance['rw_opt']['users_logged_out']) || isset($instance['rw_opt']['users_logged_in']))
-						$found_user = TRUE;
+						$found_user = true;
 					elseif(isset($instance['rw_opt']['users_logged_out']))
-						$found_user = FALSE;
+						$found_user = false;
 				}
 				else
 				{
 					if(isset($instance['rw_opt']['users_logged_out'], $instance['rw_opt']['users_logged_in']) || isset($instance['rw_opt']['users_logged_out']))
-						$found_user = TRUE;
+						$found_user = true;
 					elseif(isset($instance['rw_opt']['users_logged_in']))
-						$found_user = FALSE;
+						$found_user = false;
 				}
 
-				if($display_type === TRUE)
+				if($display_type === true)
 				{
-					if($found_user === TRUE)
-						$display_user = TRUE;
+					if($found_user === true)
+						$display_user = true;
 					else
 					{
-						$return = TRUE;
-						$display_user = FALSE;
+						$return = true;
+						$display_user = false;
 					}
 				}
 				else
-					$display_user = ($found_user === TRUE ? FALSE : TRUE);
+					$display_user = ($found_user === true ? false : true);
 			}
 			else
-				$display_user = TRUE;
+				$display_user = true;
 		}
 
 		//devices
-		if($return === FALSE)
+		if($return === false)
 		{
-			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'device') === FALSE)
+			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'device') === false)
 			{
-				$empty_device = FALSE;
+				$empty_device = false;
 
 				if(wp_is_mobile())
 				{
 					if(isset($instance['rw_opt']['devices_mobile'], $instance['rw_opt']['devices_desktop']) || isset($instance['rw_opt']['devices_mobile']))
-						$found_device = TRUE;
+						$found_device = true;
 					elseif(isset($instance['rw_opt']['devices_desktop']))
-						$found_device = FALSE;
+						$found_device = false;
 				}
 				else
 				{
 					if(isset($instance['rw_opt']['devices_desktop'], $instance['rw_opt']['devices_mobile']) || isset($instance['rw_opt']['devices_desktop']))
-						$found_device = TRUE;
+						$found_device = true;
 					elseif(isset($instance['rw_opt']['devices_mobile']))
-						$found_device = FALSE;
+						$found_device = false;
 				}
 
-				if($display_type === TRUE)
+				if($display_type === true)
 				{
-					if($found_device === TRUE)
-						$display_device = TRUE;
+					if($found_device === true)
+						$display_device = true;
 					else
 					{
-						$return = TRUE;
-						$display_device = FALSE;
+						$return = true;
+						$display_device = false;
 					}
 				}
 				else
-					$display_device = ($found_device === TRUE ? FALSE : TRUE);
+					$display_device = ($found_device === true ? false : true);
 			}
 			else
-				$display_device = TRUE;
+				$display_device = true;
 		}
 
 		//rest
-		if($return === FALSE)
+		if($return === false)
 		{
-			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'main') === FALSE)
+			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'main') === false)
 			{
-				$empty_main = FALSE;
+				$empty_main = false;
 
 				if(is_front_page())
 				{
-					$found_main = isset($instance['rw_opt']['others_front_page']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_front_page']) ? true : false;
 
-					if(is_home() && $found_main == FALSE)
-						$found_main = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
+					if(is_home() && $found_main == false)
+						$found_main = isset($instance['rw_opt']['others_blog_page']) ? true : false;
 				}
 				elseif(is_home())
-					$found_main = isset($instance['rw_opt']['others_blog_page']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_blog_page']) ? true : false;
 				elseif(is_page())
-					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? true : false;
 				elseif(is_singular())
 				{
-					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? true : false;
 					
-					if(is_single() && $found_main == FALSE)
-						$found_main = isset($instance['rw_opt']['others_single_post']) ? TRUE : FALSE;
+					if(is_single() && $found_main == false)
+						$found_main = isset($instance['rw_opt']['others_single_post']) ? true : false;
 				}
 				elseif(is_category())
-					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? true : false;
 				elseif(is_tag())
 				{
 					if(($object = get_queried_object()) !== NULL && isset($object->taxonomy) && $object->taxonomy === 'post_tag')
@@ -1614,77 +1614,77 @@ class Restrict_Widgets
 					else
 						$tag = '';
 
-					$found_main = isset($instance['rw_opt']['taxonomy_'.$tag]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['taxonomy_'.$tag]) ? true : false;
 				}
 				elseif(is_tax())
-					$found_main = isset($instance['rw_opt']['taxonomy_'.get_query_var('taxonomy')]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['taxonomy_'.get_query_var('taxonomy')]) ? true : false;
 				elseif(is_404())
-					$found_main = isset($instance['rw_opt']['others_404_page']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_404_page']) ? true : false;
 				elseif(is_sticky())
-					$found_main = isset($instance['rw_opt']['others_sticky_post']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_sticky_post']) ? true : false;
 				elseif(is_search())
-					$found_main = isset($instance['rw_opt']['others_search_page']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_search_page']) ? true : false;
 				elseif(is_author())
-					$found_main = isset($instance['rw_opt']['others_author_archive']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_author_archive']) ? true : false;
 				elseif(is_date())
-					$found_main = isset($instance['rw_opt']['others_date_archive']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['others_date_archive']) ? true : false;
 				elseif(is_post_type_archive())
-					$found_main = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? true : false;
 				elseif(function_exists('bbp_is_search') && bbp_is_search())
-					$found_main = isset($instance['rw_opt']['bbpress_search']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['bbpress_search']) ? true : false;
 				elseif(function_exists('bbp_is_single_user') && bbp_is_single_user())
-					$found_main = isset($instance['rw_opt']['bbpress_single_user']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['bbpress_single_user']) ? true : false;
 				elseif(function_exists('bbp_is_topic_tag') && bbp_is_topic_tag())
-					$found_main = isset($instance['rw_opt']['bbpress_topic_tag']) ? TRUE : FALSE;
+					$found_main = isset($instance['rw_opt']['bbpress_topic_tag']) ? true : false;
 
-				$display_main = ($display_type === TRUE ? ($found_main === TRUE ? TRUE : FALSE) : ($found_main === TRUE ? FALSE : TRUE));
+				$display_main = ($display_type === true ? ($found_main === true ? true : false) : ($found_main === true ? false : true));
 			}
 			else
-				$display_main = TRUE;
+				$display_main = true;
 		}
 
-		if($filter === FALSE)
-			$instance = TRUE;
+		if($filter === false)
+			$instance = true;
 
-		if($display_type === TRUE)
-			$final_return = ($display_lang === TRUE && $display_user === TRUE && $display_device === TRUE && $display_main === TRUE ? $instance : FALSE);
+		if($display_type === true)
+			$final_return = ($display_lang === true && $display_user === true && $display_device === true && $display_main === true ? $instance : false);
 		else
 			$final_return = (
 				(
 					//4
-					($empty_lang === FALSE && $empty_user === FALSE && $empty_device === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_user === FALSE && $display_device === FALSE && $display_main === FALSE) ||
+					($empty_lang === false && $empty_user === false && $empty_device === false && $empty_main === false && $display_lang === false && $display_user === false && $display_device === false && $display_main === false) ||
 
 					//3
-					($empty_lang === FALSE && $empty_user === FALSE && $empty_device === FALSE && $display_lang === FALSE && $display_user === FALSE && $display_device === FALSE) ||
-					($empty_lang === FALSE && $empty_user === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_user === FALSE && $display_main === FALSE) ||
-					($empty_lang === FALSE && $empty_device === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_device === FALSE && $display_main === FALSE) ||
-					($empty_user === FALSE && $empty_device === FALSE && $empty_main === FALSE && $display_user === FALSE && $display_device === FALSE && $display_main === FALSE) ||
+					($empty_lang === false && $empty_user === false && $empty_device === false && $display_lang === false && $display_user === false && $display_device === false) ||
+					($empty_lang === false && $empty_user === false && $empty_main === false && $display_lang === false && $display_user === false && $display_main === false) ||
+					($empty_lang === false && $empty_device === false && $empty_main === false && $display_lang === false && $display_device === false && $display_main === false) ||
+					($empty_user === false && $empty_device === false && $empty_main === false && $display_user === false && $display_device === false && $display_main === false) ||
 
 					//2
-					($empty_lang === FALSE && $empty_user === FALSE && $display_lang === FALSE && $display_user === FALSE) ||
-					($empty_lang === FALSE && $empty_device === FALSE && $display_lang === FALSE && $display_device === FALSE) ||
-					($empty_lang === FALSE && $empty_main === FALSE && $display_lang === FALSE && $display_main === FALSE) ||
-					($empty_user === FALSE && $empty_device === FALSE && $display_user === FALSE && $display_device === FALSE) ||
-					($empty_user === FALSE && $empty_main === FALSE && $display_user === FALSE && $display_main === FALSE) ||
-					($empty_device === FALSE && $empty_main === FALSE && $display_device === FALSE && $display_main === FALSE) ||
+					($empty_lang === false && $empty_user === false && $display_lang === false && $display_user === false) ||
+					($empty_lang === false && $empty_device === false && $display_lang === false && $display_device === false) ||
+					($empty_lang === false && $empty_main === false && $display_lang === false && $display_main === false) ||
+					($empty_user === false && $empty_device === false && $display_user === false && $display_device === false) ||
+					($empty_user === false && $empty_main === false && $display_user === false && $display_main === false) ||
+					($empty_device === false && $empty_main === false && $display_device === false && $display_main === false) ||
 
 					//1
-					($empty_lang === FALSE && $display_lang === FALSE) || 
-					($empty_user === FALSE && $display_user === FALSE) || 
-					($empty_device === FALSE && $display_device === FALSE) || 
-					($empty_main === FALSE && $display_main === FALSE)
+					($empty_lang === false && $display_lang === false) || 
+					($empty_user === false && $display_user === false) || 
+					($empty_device === false && $display_device === false) || 
+					($empty_main === false && $display_main === false)
 				)
-				? FALSE : $instance
+				? false : $instance
 			);
 
 		//filter true or false
-		if($filter === TRUE)
+		if($filter === true)
 			$final_return = apply_filters_ref_array('rw_display_widget', array($final_return, $instance));
 
 		//if true return instance
-		$final_return = ($final_return === FALSE) ? FALSE : $instance;
+		$final_return = ($final_return === false) ? false : $instance;
 
-		//display: return $instance, hide: return FALSE
+		//display: return $instance, hide: return false
 		return $final_return;
 	}
 
@@ -1803,7 +1803,7 @@ class Restrict_Widgets
 					add_action('admin_menu', array(&$this, 'manage_widgets_menu_fix'), 999);
 
 					//add cap to edit widgets
-					$allcaps['edit_theme_options'] = TRUE;
+					$allcaps['edit_theme_options'] = true;
 				}
 			}
 		}

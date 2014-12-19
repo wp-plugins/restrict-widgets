@@ -23,21 +23,16 @@ jQuery(document).ready(function ($) {
 	$('#options-widgets-sidebars').chosen({placeholder_text: rwArgs.restrict_sidebars});
 	$('#options-widgets-roles').chosen({placeholder_text: rwArgs.restrict_roles});
 
-	$(document).on('mouseover', '#widgets-right, .inactive-sidebar', function() {
-		$(this).find('.restrict-widgets-hide').chosen({
-			allow_single_deselect: true,
-			disable_search: true
-		});
-
-		$(this).find('.restrict-widgets-select').chosen({placeholder_text: rwArgs.placeholder_text});
-	});
-
-	$(document).on('ajaxStop', function() {
+	$(document).on('ready ajaxStop ajaxStart', function() {
 		$('#widgets-right .restrict-widgets-hide, .inactive-sidebar .restrict-widgets-hide').chosen({
 			allow_single_deselect: true,
-			disable_search: true
+			disable_search: true,
+			width: '100%'
 		});
 
-		$('#widgets-right .restrict-widgets-select, .inactive-sidebar .restrict-widgets-select').chosen({placeholder_text: rwArgs.placeholder_text});
+		$('#widgets-right .restrict-widgets-select, .inactive-sidebar .restrict-widgets-select').chosen({
+			placeholder_text: rwArgs.placeholder_text,
+			width: '100%'
+			});
 	});
 });	

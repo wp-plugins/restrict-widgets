@@ -3,8 +3,8 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: 1.2.4
+Tested up to: 4.1
+Stable tag: 1.2.5
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -56,6 +56,10 @@ No questions yet.
 
 == Changelog ==
 
+= 1.2.5 =
+* Tweak: UI improvements
+* Tweak: jQuery chosen updated to 1.2.0
+
 = 1.2.4 =
 * Tweak: Widget options interface adjustments
 * Tweak: Confirmed WP 4.0 compatibility
@@ -106,6 +110,6 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.4 =
-* Tweak: Widget options interface adjustments
-* Tweak: Confirmed WP 4.0 compatibility
+= 1.2.5 =
+* Tweak: UI improvements
+* Tweak: jQuery chosen updated to 1.2.0
