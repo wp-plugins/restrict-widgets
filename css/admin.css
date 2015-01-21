@@ -1,0 +1,39 @@
+.restrict-widgets .restrict-widgets-select, .restrict-widgets .restrict-widgets-hide {
+	width:100%;
+}
+.widget .widget-inside p.restrict-widgets-display-label { margin-bottom:3px; }
+.restrict-widgets-select-div { clear:both; }
+.restrict-widgets-hide-div { clear:both; margin-bottom:3px; }
+#widgets-left #widgets-options {
+	margin-left: 0;
+	margin-right: 0;
+	margin-right: 340px;
+	width: 100%;
+	border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+#widgets-left #widgets-options .widgets-sortables {
+	padding: 15px;
+}
+
+#widgets-options input[type="text"] {
+	line-height:20px;
+}
+#widgets-options select {
+	width: 100% !important;
+	-webkit-box-sizing: border-box;‌​
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.widget-liquid-right .widget, .inactive-sidebar .widget, .widget-liquid-right .sidebar-description {
+    overflow: visible !important;
+}
+#widgets-options table { width:100%; }
+#widgets-options label { vertical-align:top; margin: 10px 0; display: inline-block; font-weight:bold; }
+#widgets-options label .description { font-weight: normal; }
+#widgets-options #save-widgets-options { margin: 20px 0 0 0; }
+#widgets-options form .description { font-style: italic; padding: 0; }
+.widgets-holder-wrap .widgets-sortables { min-height:0!important; height:auto!important; }
+
+#df-credits { float:right; font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-style:italic; margin:15px 0 0; display:block; }
+#df-credits a { padding: 5px 0 0 7px; vertical-align:middle; }
