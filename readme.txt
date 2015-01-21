@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -36,6 +36,7 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 
 * Chinese - by Changmeng Hu
 * Czech - by Martin Kucera
+* Hebrew - by [Ahrale Shrem](http://atar4u.com/)
 * Polish - by Bartosz Arendt
 
 
@@ -55,6 +56,9 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.2.6 =
+* New: Hebrew translation by [Ahrale Shrem](http://atar4u.com/)
 
 = 1.2.5 =
 * Tweak: UI improvements
@@ -110,6 +114,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.5 =
-* Tweak: UI improvements
-* Tweak: jQuery chosen updated to 1.2.0
+= 1.2.6 =
+* New: Czech translation by [Ahrale Shrem](http://atar4u.com/)

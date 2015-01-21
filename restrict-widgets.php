@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.5
+Version: 1.2.6
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -384,7 +384,6 @@ class Restrict_Widgets
 		$this->custom_post_types = get_post_types(
 			array(
 				'public' => true,
-				'_builtin' => false
 			),
 			'objects',
 			'and'
@@ -393,7 +392,6 @@ class Restrict_Widgets
 		$this->custom_post_types_archives = get_post_types(
 			array(
 				'public' => true,
-				'_builtin' => false,
 				'has_archive' => true
 			),
 			'objects',
@@ -1580,7 +1578,7 @@ class Restrict_Widgets
 				$display_device = true;
 		}
 
-		//rest
+		//others
 		if($return === false)
 		{
 			if(isset($instance['rw_opt']) && $this->is_widget_empty($instance['rw_opt'], 'main') === false)
@@ -1596,8 +1594,6 @@ class Restrict_Widgets
 				}
 				elseif(is_home())
 					$found_main = isset($instance['rw_opt']['others_blog_page']) ? true : false;
-				elseif(is_page())
-					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? true : false;
 				elseif(is_singular())
 				{
 					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? true : false;
@@ -1605,6 +1601,8 @@ class Restrict_Widgets
 					if(is_single() && $found_main == false)
 						$found_main = isset($instance['rw_opt']['others_single_post']) ? true : false;
 				}
+				elseif(is_page())
+					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? true : false;
 				elseif(is_category())
 					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? true : false;
 				elseif(is_tag())
