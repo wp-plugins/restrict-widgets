@@ -4,7 +4,7 @@ Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.2.6
+Stable tag: 1.2.6.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -56,6 +56,9 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.2.6.1 =
+* Fix: Page hide/display settings broken after 1.2.6 update
 
 = 1.2.6 =
 * New: Hebrew translation by [Ahrale Shrem](http://atar4u.com/)
@@ -114,5 +117,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.6 =
-* New: Czech translation by [Ahrale Shrem](http://atar4u.com/)
+= 1.2.6.1 =
+* Fix: Page hide/display settings broken after 1.2.6 update

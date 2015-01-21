@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.6
+Version: 1.2.6.1
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -1594,7 +1594,7 @@ class Restrict_Widgets
 				}
 				elseif(is_home())
 					$found_main = isset($instance['rw_opt']['others_blog_page']) ? true : false;
-				elseif(is_singular())
+				elseif(is_singular() && !is_page())
 				{
 					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? true : false;
 					
