@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Restrict Widgets v1.2.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-03 12:12+0100\n"
+"PO-Revision-Date: 2014-02-15 23:23:24+0000\n"
+"Last-Translator: Martin Kucera <martin.kucera@digisvet.cz>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%100/10==1 ? 2 : n%10==1 ? 0 : (n+9)%10>3 ? 2 : 1;\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: restrict-widgets.php:310
+#@ restrict-widgets
+msgid "Support"
+msgstr "Podpora"
+
+#: restrict-widgets.php:332 restrict-widgets.php:1722
+#: restrict-widgets.php:1768
+#@ restrict-widgets
+#@ default
+msgid "Widgets"
+msgstr "Widgety"
+
+#: restrict-widgets.php:411
+#@ restrict-widgets
+msgid "Pages"
+msgstr "Stránky"
+
+#: restrict-widgets.php:412
+#@ restrict-widgets
+msgid "Custom Post Types"
+msgstr "Vlastní typy obsahu"
+
+#: restrict-widgets.php:413
+#@ restrict-widgets
+msgid "Custom Post Type Archives"
+msgstr "Archívy vlastních typů obsahu"
+
+#: restrict-widgets.php:414
+#@ restrict-widgets
+msgid "Categories"
+msgstr "Rubriky"
+
+#: restrict-widgets.php:415
+#@ restrict-widgets
+msgid "Taxonomies"
+msgstr "Taxonomie"
+
+#: restrict-widgets.php:416
+#@ restrict-widgets
+msgid "Others"
+msgstr "Ostatní"
+
+#: restrict-widgets.php:423
+#@ restrict-widgets
+msgid "Search"
+msgstr "Hledat"
+
+#: restrict-widgets.php:424
+#@ restrict-widgets
+msgid "Single User"
+msgstr "Uživatel"
+
+#: restrict-widgets.php:425
+#@ restrict-widgets
+msgid "Topic Tag"
+msgstr "Štítky témat"
+
+#: restrict-widgets.php:428
+#@ restrict-widgets
+msgid "bbPress"
+msgstr "bbPress"
+
+#: restrict-widgets.php:431
+#@ restrict-widgets
+msgid "Devices"
+msgstr "Zařízení"
+
+#: restrict-widgets.php:432
+#@ restrict-widgets
+msgid "Users"
+msgstr "Uživatelé"
+
+#: restrict-widgets.php:433
+#@ restrict-widgets
+msgid "Languages"
+msgstr "Jazyky"
+
+#: restrict-widgets.php:436
+#@ restrict-widgets
+msgid "Front Page"
+msgstr "Úvodní stránka"
+
+#: restrict-widgets.php:437
+#@ restrict-widgets
+msgid "Blog Page"
+msgstr "Stránka příspěvků (Blog)"
+
+#: restrict-widgets.php:438
+#@ restrict-widgets
+msgid "Single Posts"
+msgstr "Jednotlivé příspěvky"
+
+#: restrict-widgets.php:439
+#@ restrict-widgets
+msgid "Sticky Posts"
+msgstr "Zvýrazněné příspěvky"
+
+#: restrict-widgets.php:440
+#@ restrict-widgets
+msgid "Author Archive"
+msgstr "Archív podle autora"
+
+#: restrict-widgets.php:441
+#@ restrict-widgets
+msgid "Date Archive"
+msgstr "Archív podle data"
+
+#: restrict-widgets.php:442
+#@ restrict-widgets
+msgid "404 Page"
+msgstr "Chybová stránka 404"
+
+#: restrict-widgets.php:443
+#@ restrict-widgets
+msgid "Search Page"
+msgstr "Výsledky vyhledávání"
+
+#: restrict-widgets.php:447
+#@ restrict-widgets
+msgid "Logged in users"
+msgstr "Přihlášení uživatelé"
+
+#: restrict-widgets.php:448
+#@ restrict-widgets
+msgid "Logged out users"
+msgstr "Odhlášení uživatelé"
+
+#: restrict-widgets.php:452
+#@ restrict-widgets
+msgid "Mobile"
+msgstr "Mobilní zařízení"
+
+#: restrict-widgets.php:453
+#@ restrict-widgets
+msgid "Desktop, Laptop, etc."
+msgstr "Desktopová zařízení"
+
+#: restrict-widgets.php:668
+#@ default
+msgid "Restrict widgets"
+msgstr "Widgety"
+
+#: restrict-widgets.php:672
+#@ restrict-widgets
+msgid "Use this settings to manage access to widgets page and to restrict availability of certain widgets, sidebars and widgets options to site administrators only."
+msgstr "Zde můžete nastavit, které úrovně uživatelů mají mít přístup ke stránce Widgety a vyhradit zobrazení jednotlivých widgetů, postranních panelů a možností filtrace widgetů pouze pro admnistrátora."
+
+#: restrict-widgets.php:677
+#@ restrict-widgets
+msgid "Restrict Users"
+msgstr "Úrovně uživatelů"
+
+#: restrict-widgets.php:687
+#@ restrict-widgets
+msgid "Select user roles restricted to manage widgets."
+msgstr "Vyberte, které úrovně uživatelů mají mít oprávnění upravovat widgety."
+
+#: restrict-widgets.php:691
+#@ restrict-widgets
+msgid "Restrict Sidebars"
+msgstr "Postranní panely"
+
+#: restrict-widgets.php:707
+#@ restrict-widgets
+msgid "Select which sidebars will be restricted to admins only."
+msgstr "Vyberte, které postranní panely mají být přístupné pouze pro administrátora."
+
+#. translators: plugin header field 'Name'
+#: restrict-widgets.php:0 restrict-widgets.php:711
+#@ restrict-widgets
+msgid "Restrict Widgets"
+msgstr "Omezení widgetů"
+
+#: restrict-widgets.php:724
+#@ restrict-widgets
+msgid "Select which widgets will be restricted to admins only."
+msgstr "Vyberte, které widgety mají být přístupné pouze pro administrátora."
+
+#: restrict-widgets.php:728
+#@ restrict-widgets
+msgid "Restrict Widget Options"
+msgstr "Filtrace widgetů"
+
+#: restrict-widgets.php:738
+#@ restrict-widgets
+msgid "Select which widget options will be restricted to admins only."
+msgstr "Vyberte, které položky ve filtraci widgetů mají být přístupné pouze pro administrátora."
+
+#: restrict-widgets.php:742
+#@ restrict-widgets
+msgid "Restrict Option Groups"
+msgstr "Zobrazení filtrace"
+
+#: restrict-widgets.php:745
+#@ restrict-widgets
+msgid "Display widget options in groups"
+msgstr "Sdružovat položky ve filtraci widgetů do skupin"
+
+#: restrict-widgets.php:749
+#@ restrict-widgets
+msgid "Modify is_active_sidebar()"
+msgstr "Modifikace is_active_sidebar()"
+
+#: restrict-widgets.php:752
+#@ restrict-widgets
+msgid "By default is_active_sidebar() function returns TRUE even if no widget is displayed in a sidebar. Check this if you want is_active_sidebar() to recognize Restrict Widgets display settings."
+msgstr "Funkce is_active_sidebar() vrací standardně hodnotu TRUE i v případě, že postranní panel neobsahuje žádný widget. Zaškrtněte, pokud chcete, aby funkce is_active_sidebar() rozpoznávala zobrazení widgetů, nastavené pluginem Restrict Widgets."
+
+#: restrict-widgets.php:756
+#@ restrict-widgets
+msgid "Plugin Deactivation"
+msgstr "Deaktivace pluginu"
+
+#: restrict-widgets.php:759
+#@ restrict-widgets
+msgid "Remove all plugin data on deactivation"
+msgstr "Smazat všechna nastavení při deaktivaci pluginu"
+
+#: restrict-widgets.php:763
+#@ restrict-widgets
+msgid "Save settings"
+msgstr "Uložit změny"
+
+#: restrict-widgets.php:938 restrict-widgets.php:949
+#, php-format
+#@ restrict-widgets
+msgid "Single %s"
+msgstr "Jednotlivé %s"
+
+#: restrict-widgets.php:976 restrict-widgets.php:987
+#, php-format
+#@ restrict-widgets
+msgid "%s Archive"
+msgstr "Archív %s"
+
+#: restrict-widgets.php:1286
+#@ restrict-widgets
+msgid "Display / Hide Widget"
+msgstr "Zobrazit / skrýt widget"
+
+#: restrict-widgets.php:1288
+#@ restrict-widgets
+msgid "Display widget on selected"
+msgstr "Zobrazit widget na stránkách"
+
+#: restrict-widgets.php:1289
+#@ restrict-widgets
+msgid "Hide widget on selected"
+msgstr "Skrýt widget na stránkách"
+
+#. translators: plugin header field 'PluginURI'
+#: restrict-widgets.php:0
+#@ restrict-widgets
+msgid "http://www.dfactory.eu/plugins/restrict-widgets/"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: restrict-widgets.php:0
+#@ restrict-widgets
+msgid "All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users."
+msgstr "Komplexní řešení pro management widgetů ve WordPressu. Umožňuje skrývat nebo zobrazovat widgety na určených stránkách a nastavit přístup k widgetům pro různé úrovně uživatelů."
+
+#. translators: plugin header field 'Author'
+#: restrict-widgets.php:0
+#@ restrict-widgets
+msgid "dFactory"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: restrict-widgets.php:0
+#@ restrict-widgets
+msgid "http://www.dfactory.eu/"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: restrict-widgets.php:0
+#@ restrict-widgets
+msgid "1.2.3"
+msgstr ""
+
+#: restrict-widgets.php:851
+#@ restrict-widgets
+msgid "Select options"
+msgstr "Vyberte"
+
+#: restrict-widgets.php:852
+#@ restrict-widgets
+msgid "Select widgets"
+msgstr "Vyberte widgety"
+
+#: restrict-widgets.php:853
+#@ restrict-widgets
+msgid "Select widgets options"
+msgstr "Vyberte položky filtrace widgetů"
+
+#: restrict-widgets.php:854
+#@ restrict-widgets
+msgid "Select sidebars"
+msgstr "Vyberte postranní panely"
+
+#: restrict-widgets.php:855
+#@ restrict-widgets
+msgid "Select roles"
+msgstr "Vyberte úrovně uživatelů"
+
+#: restrict-widgets.php:856
+#@ restrict-widgets
+msgid "Select languages"
+msgstr "Vyberte jazyky"
+
