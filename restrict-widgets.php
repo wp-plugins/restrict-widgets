@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.2.6.1
+Version: 1.2.7
 Author: dFactory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
@@ -1594,15 +1594,25 @@ class Restrict_Widgets
 				}
 				elseif(is_home())
 					$found_main = isset($instance['rw_opt']['others_blog_page']) ? true : false;
-				elseif(is_singular() && !is_page())
+				elseif(is_singular())
 				{
-					$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? true : false;
-					
-					if(is_single() && $found_main == false)
-						$found_main = isset($instance['rw_opt']['others_single_post']) ? true : false;
+					if(is_page())
+					{
+						if(isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]))
+							$found_main = true;
+						else
+							$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? true : false;
+					}
+					else
+					{
+						$found_main = isset($instance['rw_opt']['cpt_'.get_post_type($post_id)]) ? true : false;
+						
+						if(is_single() && $found_main == false)
+							$found_main = isset($instance['rw_opt']['others_single_post']) ? true : false;
+					}
 				}
-				elseif(is_page())
-					$found_main = isset($instance['rw_opt']['pageid_'.$post_id]) ? true : false;
+				elseif(is_post_type_archive())
+					$found_main = isset($instance['rw_opt']['cpta_'.get_query_var('post_type')]) ? true : false;
 				elseif(is_category())
 					$found_main = isset($instance['rw_opt']['category_'.get_query_var('cat')]) ? true : false;
 				elseif(is_tag())
@@ -1626,8 +1636,6 @@ class Restrict_Widgets
 					$found_main = isset($instance['rw_opt']['others_author_archive']) ? true : false;
 				elseif(is_date())
 					$found_main = isset($instance['rw_opt']['others_date_archive']) ? true : false;
-				elseif(is_post_type_archive())
-					$found_main = isset($instance['rw_opt']['cpta_'.get_post_type($post_id)]) ? true : false;
 				elseif(function_exists('bbp_is_search') && bbp_is_search())
 					$found_main = isset($instance['rw_opt']['bbpress_search']) ? true : false;
 				elseif(function_exists('bbp_is_single_user') && bbp_is_single_user())
