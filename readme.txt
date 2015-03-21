@@ -3,8 +3,8 @@ Contributors: dfactory
 Donate link: http://www.dfactory.eu/
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
 Requires at least: 3.8
-Tested up to: 4.1
-Stable tag: 1.2.7
+Tested up to: 4.1.1
+Stable tag: 1.2.8
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -36,6 +36,7 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 
 * Chinese - by Changmeng Hu
 * Czech - by Martin Kucera
+* German - by [Angelika Reisiger](http://apart-webdesign.de/)
 * Hebrew - by [Ahrale Shrem](http://atar4u.com/)
 * Polish - by Bartosz Arendt
 
@@ -56,6 +57,9 @@ No questions yet.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.2.8 =
+* New: German translation by [Angelika Reisiger](http://apart-webdesign.de/)
 
 = 1.2.7 =
 * Fix: Enable display/hide on any single page
@@ -121,6 +125,5 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.2.7 =
-* Fix: Enable display/hide on any single page
-* Tweak: Change post type archive detection from get_post_type() to get_query_var
+= 1.2.8 =
+* New: German translation by [Angelika Reisiger](http://apart-webdesign.de/)
