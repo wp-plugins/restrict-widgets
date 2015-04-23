@@ -1,0 +1,468 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: restrict-widgets-zh_CN\n"
+"POT-Creation-Date: 2013-06-18 08:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: 倡萌@WordPress大学 <admin@cmhello.com>\n"
+"Language-Team: 倡萌@WordPress大学 <admin@cmhello.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../restrict-widgets.php:103
+msgid "Support"
+msgstr "支持"
+
+#: ../restrict-widgets.php:125 ../restrict-widgets.php:1436
+#: ../restrict-widgets.php:1481
+msgid "Widgets"
+msgstr "小工具"
+
+#: ../restrict-widgets.php:261
+msgid "Pages"
+msgstr "页面"
+
+#: ../restrict-widgets.php:262
+msgid "Custom Post Types"
+msgstr "自定义文章类型"
+
+#: ../restrict-widgets.php:263
+msgid "Custom Post Type Archives"
+msgstr "自定义文章类型存档页"
+
+#: ../restrict-widgets.php:264
+msgid "Categories"
+msgstr "分类"
+
+#: ../restrict-widgets.php:265
+msgid "Taxonomies"
+msgstr "分类法"
+
+#: ../restrict-widgets.php:266
+msgid "Others"
+msgstr "其他"
+
+#: ../restrict-widgets.php:267
+msgid "Users"
+msgstr "用户"
+
+#: ../restrict-widgets.php:268
+msgid "Languages"
+msgstr "语言"
+
+#: ../restrict-widgets.php:272
+msgid "Front Page"
+msgstr "主页"
+
+#: ../restrict-widgets.php:273
+msgid "Blog Page"
+msgstr "博客页面"
+
+#: ../restrict-widgets.php:274
+msgid "Single Posts"
+msgstr "所有文章"
+
+#: ../restrict-widgets.php:275
+msgid "Sticky Posts"
+msgstr "置顶文章"
+
+#: ../restrict-widgets.php:276
+msgid "Author Archive"
+msgstr "作者存档页"
+
+#: ../restrict-widgets.php:277
+msgid "Date Archive"
+msgstr "日期存档页"
+
+#: ../restrict-widgets.php:278
+msgid "404 Page"
+msgstr "404页面"
+
+#: ../restrict-widgets.php:279
+msgid "Search Page"
+msgstr "搜索结果页面"
+
+#: ../restrict-widgets.php:283
+msgid "Logged in users"
+msgstr "已登录用户"
+
+#: ../restrict-widgets.php:284
+msgid "Logged out users"
+msgstr "未登录用户"
+
+#: ../restrict-widgets.php:505
+msgid "Restrict widgets"
+msgstr "限制小工具"
+
+#: ../restrict-widgets.php:509
+msgid ""
+"Use this settings to manage access to widgets page and to restrict "
+"availability of certain widgets, sidebars and widgets options to site "
+"administrators only."
+msgstr ""
+"通过下面的设置，来管理小工具页面的访问权限，以及限制管理员使用哪些侧边栏区"
+"域、小工具、小工具选项等。"
+
+#: ../restrict-widgets.php:512
+msgid "Restrict Users"
+msgstr "限制用户"
+
+#: ../restrict-widgets.php:522
+msgid "Select user roles restricted to manage widgets."
+msgstr "选择限制用户角色管理小工具"
+
+#: ../restrict-widgets.php:526
+msgid "Restrict Sidebars"
+msgstr "限制侧边栏"
+
+#: ../restrict-widgets.php:541
+msgid "Select which sidebars will be restricted to admins only."
+msgstr "选择限制管理员使用哪些侧边栏区域"
+
+#: ../restrict-widgets.php:545
+msgid "Restrict Widgets"
+msgstr "限制小工具"
+
+#: ../restrict-widgets.php:557
+msgid "Select which widgets will be restricted to admins only."
+msgstr "选择限制管理员使用哪些小工具"
+
+#: ../restrict-widgets.php:561
+msgid "Restrict Widget Options"
+msgstr "限制小工具选项"
+
+#: ../restrict-widgets.php:571
+msgid "Select which widget options will be restricted to admins only."
+msgstr "选择限制管理员使用哪些小工具选项"
+
+#: ../restrict-widgets.php:575
+msgid "Restrict Option Groups"
+msgstr "限制选项组"
+
+#: ../restrict-widgets.php:578
+msgid "Display widget options in groups"
+msgstr "分组显示小工具选项"
+
+#: ../restrict-widgets.php:582
+msgid "Plugin Deactivation"
+msgstr "插件停用"
+
+#: ../restrict-widgets.php:585
+msgid "Remove all plugin data on deactivation"
+msgstr "停用该插件时，删除该插件数据"
+
+#: ../restrict-widgets.php:589
+msgid "Save settings"
+msgstr "保存设置"
+
+#: ../restrict-widgets.php:590
+msgid "Created by"
+msgstr ""
+"简体中文支持：<a href=\"http://www.cmhello.com\" target=\"_blank\">倡萌 </a> "
+"@<a href=\"http://www.wpdaxue.com\" target=\"_blank\">WordPress大学</a>  |  "
+"开发者："
+
+#: ../restrict-widgets.php:764 ../restrict-widgets.php:774
+#, php-format
+msgid "Single %s"
+msgstr "单个 %s"
+
+#: ../restrict-widgets.php:804 ../restrict-widgets.php:814
+#, php-format
+msgid "%s Archive"
+msgstr "%s 存档页"
+
+#: ../restrict-widgets.php:1045
+msgid "Display / Hide Widget"
+msgstr "显示/隐藏小工具"
+
+#: ../restrict-widgets.php:1047
+msgid "Display widget on selected"
+msgstr "在所选项显示小工具"
+
+#: ../restrict-widgets.php:1048
+msgid "Hide widget on selected"
+msgstr "在所选项隐藏小工具"
+
+#~ msgid "Friends Notifications"
+#~ msgstr "好友通知"
+
+#~ msgid "Email Notification"
+#~ msgstr "邮件通知"
+
+#~ msgid "Yes"
+#~ msgstr "是"
+
+#~ msgid "No"
+#~ msgstr "否"
+
+#~ msgid "Receive an email when someone adds you as a friend"
+#~ msgstr "当有人添加你为好友，发送邮件通知"
+
+#~ msgid "Friends"
+#~ msgstr "好友"
+
+#~ msgid "Find Friends"
+#~ msgstr "找好友"
+
+#~ msgid "Friend Requests"
+#~ msgstr "好友请求"
+
+#~ msgid "Friends Settings"
+#~ msgstr "好友设置"
+
+#~ msgid "Cheatin&#8217; uh?"
+#~ msgstr "不忠&#8217; 呃？"
+
+#~ msgid "Friend Removed"
+#~ msgstr "删除好友"
+
+#~ msgid "Friend will be added pending approval."
+#~ msgstr "好友将在审核同意后添加"
+
+#~ msgid "Friend Request Approved"
+#~ msgstr "好友请求已同意"
+
+#~ msgid "Friend Request Rejected"
+#~ msgstr "好友请求被拒绝"
+
+#~ msgid "Quick Message Success."
+#~ msgstr "信息发送成功"
+
+#~ msgid "Quick Message Failed."
+#~ msgstr "信息发送失败"
+
+#~ msgid "Settings saved"
+#~ msgstr "保存设置"
+
+#~ msgid "Email Request Template"
+#~ msgstr "邮件请求模板"
+
+#~ msgid "Email Approval Template"
+#~ msgstr "邮件同意模板"
+
+#~ msgid "Email Rejection Template"
+#~ msgstr "邮件拒绝模板"
+
+#~ msgid ""
+#~ "The Friends plugin lets users connect with other users within the "
+#~ "WordPress Multisite environment. Once connected friends can send message "
+#~ "to each other. Also available is a handy widget to display a user's "
+#~ "friends listing"
+#~ msgstr ""
+#~ "这个好友插件可以让多站点之间的用户相互联系。一旦成为好友，就可以相互间发送"
+#~ "信息。当然，也包含一个不错的小工具，用来显示用户的好友列表。"
+
+#~ msgid ""
+#~ "The Friends listing page will show all user your have connections with. "
+#~ "From the listing you can send messages to users. Also you can remove "
+#~ "users who may have become unfriendly."
+#~ msgstr ""
+#~ "好友列表页面将显示你所添加的所有好友，你可以通过这个页面给好友发送信息，你"
+#~ "还可以删除那些不友好的用户。"
+
+#~ msgid "<strong>Friend</strong> - This is the user's display name."
+#~ msgstr "<strong>好友</strong> - 用户的昵称"
+
+#~ msgid "<strong>Avatar</strong> - The user's avatar"
+#~ msgstr "<strong>头像</strong> - 用户的头像"
+
+#~ msgid ""
+#~ "<strong>Send Message</strong> - Once you are connected to other friends "
+#~ "you can send them messages."
+#~ msgstr ""
+#~ "<strong>发送信息</strong> - 一旦你成功添加对方为好友，就可以给他们发送信息"
+
+#~ msgid "<strong>View Blog</strong> - View the user's blog"
+#~ msgstr "<strong>查看博客</strong> - 查看用户博客"
+
+#~ msgid "<strong>Remove</strong> - Allows you to remove the user as a friend."
+#~ msgstr "<strong>移除</strong> - 允许你删除好友"
+
+#~ msgid ""
+#~ "Using the search on this page you can search for other users within this "
+#~ "Multisite system. You can locate other user by searching for Name, Login "
+#~ "or Email. Click the Search button and all matching users will be listed. "
+#~ "Beside each user will be an Add link which will create a request to the "
+#~ "user. The user will need to accept the request to complete the friend "
+#~ "connection. Within the list if you see Pending instead of Add this means "
+#~ "the friend request has already been sent to this user."
+#~ msgstr ""
+#~ "通过这个页面搜索，你可以找到这个多站点网络中的其他用户。输入用户姓名、登录"
+#~ "名或电子邮件，点击“搜索”按钮，就可以显示符合条件的用户。每个用户都有一"
+#~ "个“加为好友”的链接，你可以快速提交好友申请，对方审核通过后就可以了。如果在"
+#~ "列表显示“审核中”，而不是“加为好友”，意味着你已经给该用户发送了好友请求。"
+
+#~ msgid ""
+#~ "When another user requests you to be their friend they will be listed on "
+#~ "this page. To complete the friend connection you must approve the "
+#~ "request. You may also opt to reject the request."
+#~ msgstr ""
+#~ "当其他用户求情加你为好友时，他们会显示在这个页面。你可以审核同意或者拒绝请"
+#~ "求。"
+
+#~ msgid ""
+#~ "This page contains various metaboxes to let you control the email "
+#~ "templates used during the friend connection processing."
+#~ msgstr ""
+#~ "该页面包含各种 Meta 模块，你可以通过它们设计邮件模板，以便在好友链接管理中"
+#~ "使用。"
+
+#~ msgid ""
+#~ "<strong>Email Request Template</strong> - This template contains the "
+#~ "Subject and Content used when one user requests to be friend's with "
+#~ "another user. "
+#~ msgstr ""
+#~ "<strong>邮件请求模板</strong> - 这个模板是给用户发送好友请求时用的，可以定"
+#~ "义邮件主题和内容。"
+
+#~ msgid ""
+#~ "<strong>Email Approval Template</strong> - This template contains the "
+#~ "Subject and Content used when one user approves a friend request from "
+#~ "another user. "
+#~ msgstr ""
+#~ "<strong>邮件同意模板</strong> - 这个模板是给用户同意好友请求时用的，可以定"
+#~ "义邮件主题和内容。"
+
+#~ msgid ""
+#~ "<strong>Email Rejection Template</strong> - This template contains the "
+#~ "Subject and Content used when one user rejects a friend request from "
+#~ "another user. "
+#~ msgstr ""
+#~ "<strong>邮件拒绝模板</strong> - 这个模板是给用户拒绝好友请求时用的，可以定"
+#~ "义邮件主题和内容。"
+
+#~ msgid "Overview"
+#~ msgstr "预览"
+
+#~ msgid "Friend Request"
+#~ msgstr "好友请求"
+
+#~ msgid "Previous Page"
+#~ msgstr "上一页"
+
+#~ msgid "Friend"
+#~ msgstr "好友"
+
+#~ msgid "Avatar"
+#~ msgstr "头像"
+
+#~ msgid "Actions"
+#~ msgstr "操作"
+
+#~ msgid "Send Message"
+#~ msgstr "发送信息"
+
+#~ msgid "View Blog"
+#~ msgstr "查看博客"
+
+#~ msgid "Remove"
+#~ msgstr "删除"
+
+#~ msgid "Your friends list is currently empty"
+#~ msgstr "你的好友列表目前是空的"
+
+#~ msgid "Send Message To"
+#~ msgstr "发送信息给"
+
+#~ msgid "Quick Message"
+#~ msgstr "快捷信息"
+
+#~ msgid "Message"
+#~ msgstr "信息"
+
+#~ msgid "Send"
+#~ msgstr "发送"
+
+#~ msgid "Search by friends display name, username or email address"
+#~ msgstr "通过好友的姓名、用户名或邮箱进行搜索"
+
+#~ msgid "Show existing friends"
+#~ msgstr "显示已有好友"
+
+#~ msgid "Pending"
+#~ msgstr "审核中"
+
+#~ msgid "Add"
+#~ msgstr "加为好友"
+
+#~ msgid "Nothing found"
+#~ msgstr "没有相关内容"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Approve"
+#~ msgstr "同意"
+
+#~ msgid "Reject"
+#~ msgstr "拒绝"
+
+#~ msgid "No pending Friend requests"
+#~ msgstr "没有待审的好友请求"
+
+#~ msgctxt "Friends Plugin Page Title"
+#~ msgid "Friends Settings"
+#~ msgstr "好友设置"
+
+#~ msgid ""
+#~ "This Email template is used when one user requests to be friends with "
+#~ "another user."
+#~ msgstr "这个邮件模板是用来给用户发送好友请求时用的"
+
+#~ msgid "Save Changes"
+#~ msgstr "保存更改"
+
+#~ msgid "Reset to Default"
+#~ msgstr "恢复默认"
+
+#~ msgid ""
+#~ "This Email template is used when a user receives a request from another "
+#~ "user to become friends. And the user approves the friend request."
+#~ msgstr ""
+#~ "这个邮件模板是当一个用户接收到其他用户的好友请求，用户同意请求时用的。"
+
+#~ msgid ""
+#~ "This Email template is used when a user receives a request from another "
+#~ "user to become friends. And the user reject the friend request."
+#~ msgstr ""
+#~ "这个邮件模板是当一个用户接收到其他用户的好友请求，用户拒绝请求时用的。"
+
+#~ msgid ""
+#~ "Instructions: Use the following replaceable tokens in your message. These "
+#~ "will be replaced with the real information for user, site, content, etc.. "
+#~ "Note all tokens are wrapped in square brackets."
+#~ msgstr ""
+#~ "说明：在信息中使用以下可用变量，它们将在邮件中被替换为真正的用户、网站、内"
+#~ "容 等。注意：所有的变量都要放在方括号[ ]中。"
+
+#~ msgid "The name of the sender's primary site"
+#~ msgstr "发件人的主站点的名称"
+
+#~ msgid "The URL of the sender's primary site"
+#~ msgstr "发件人的主站点的URL"
+
+#~ msgid "The user name requesting friendship."
+#~ msgstr "好友请求的用户名"
+
+#~ msgid "The user name being friended."
+#~ msgstr "好友的用户名"
+
+#~ msgid "The TO_USER primary site admin page for the Friend Request."
+#~ msgstr "好友请求的TO_USER主站点的管理页面"
+
+#~ msgid "Display"
+#~ msgstr "显示"
+
+#~ msgid "Mosaic"
+#~ msgstr "嵌套"
+
+#~ msgid "List"
+#~ msgstr "列表"
