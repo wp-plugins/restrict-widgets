@@ -59,9 +59,19 @@ No questions yet.
 
 ## Changelog
 
-### 1.4.0
+### 1.4.0 (under development)
 * New: jQuery dynamic multiselect has been changed to [jQuery Fastselect](https://dbrekalo.github.io/fastselect)
 * New: Exclusion option has been added to widget options. For example if you want a widget to hide on all "Single Pages" but you want a specific page slug to show the widget, you can add the page via the new "Excluded" choicebox in the widget settings.
+
+### 1.3.1
+* New: Categories and Tags available in Taxonomy selection
+* Tweak: Removed local translation files in favor of WP repository translations.
+
+### 1.3.0
+* New: Customizer support
+* New: Dedicated options page
+* Tweak: Switched from Chosen.js to Select2 script
+* Tweak: General code cleanup
 
 ### 1.2.9
 * New: Italian translation by [Davide Pante](http://sododesign.it/)
