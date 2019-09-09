@@ -1,10 +1,16 @@
 # Restrict Widgets
 Contributors: dfactory, [Andy King](https://github.com/treminaor)
+
 Tags: widget, widgets, widget-only, cms, conditional tags, conditional, widget logic, widget context, restrict, manage, management, capability, capabilities, sidebar, sidebars, user, permission, permissions
+
 Requires at least: 3.8
+
 Tested up to: 5.3.0
+
 Stable tag: 1.4.0
+
 License: MIT License
+
 License URI: http://opensource.org/licenses/MIT
 
 All in one widgets and sidebars management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
@@ -50,11 +56,6 @@ For more information, check out plugin page at [dFactory](http://www.dfactory.eu
 ## Frequently Asked Questions
 
 No questions yet.
-
-## Screenshots
-
-1. screenshot-1.png
-2. screenshot-2.png
 
 ## Changelog
 
