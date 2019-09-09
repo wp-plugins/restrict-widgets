@@ -1,0 +1,20 @@
+.fstMultipleMode,
+.fstQueryInput,
+.fstGroupTitle,
+.fstElement,
+.fstResultItem, 
+.fstToggleBtn,
+.fstSingleMode .fstQueryInput, 
+.fstMultipleMode .fstQueryInput, 
+.fstSingleMode {
+	font-size: inherit;
+}
+
+.fstMultipleMode .fstControls {
+	padding: 0;
+}
+
+.fstChoiceItem {
+	font-size: inherit;
+	padding: .125em .5em .125em 1.5em !important;
+}
