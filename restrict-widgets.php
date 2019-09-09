@@ -4,6 +4,7 @@ Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
 Version: 1.3.1
 Author: dFactory
+Contributers: Andy King (https://github.com/treminaor)
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/restrict-widgets/
 License: MIT License
@@ -30,7 +31,7 @@ define( 'RESTRICT_WIDGETS_REL_PATH', dirname( plugin_basename( __FILE__ ) ) . '/
 final class Restrict_Widgets {
 
 	const
-		VERSION = '1.3.1', // plugin version
+		VERSION = '1.4.0', // plugin version
 		ID = 'restrict-widgets';
 
 	private static $instance;
@@ -216,7 +217,7 @@ final class Restrict_Widgets {
 
 		echo '
 		<div id="rw_restrict_sidebars">
-			<select name="options-widgets-sidebars[]" id="options-widgets-sidebars" multiple="multiple" class="select2">';
+			<select name="options-widgets-sidebars[]" id="options-widgets-sidebars" multiple="multiple" class="restrict-widgets-fastselect">';
 
 			foreach ( $wp_registered_sidebars as $sidebar ) {
 				if ( $sidebar['id'] !== 'wp_inactive_widgets' ) {
@@ -255,7 +256,7 @@ final class Restrict_Widgets {
 			
 		echo '
 		<div id="rw_restrict_widgets">
-			<select name="options-available-widgets[]" id="options-available-widgets" multiple="multiple" class="select2">';
+			<select name="options-available-widgets[]" id="options-available-widgets" multiple="multiple" class="restrict-widgets-fastselect">';
 
 			foreach ( array_unique( $widgets_unique ) as $widget_class => $widget_name ) {
 				$this->options['available'][$widget_class] = (bool) isset( $this->options['available'][$widget_class] );
@@ -275,7 +276,7 @@ final class Restrict_Widgets {
 	public function restrict_options_field() {
 		echo '
 		<div id="rw_restrict_options">
-			<select name="options-widgets-selection[]" id="options-widgets-selection" multiple="multiple" class="select2">';
+			<select name="options-widgets-selection[]" id="options-widgets-selection" multiple="multiple" class="restrict-widgets-fastselect">';
 
 			foreach ( $this->widget_options as $group_name => $value ) {
 				echo $this->get_selection_group( $group_name, 'option', '', '', $this->options );
@@ -858,9 +859,11 @@ final class Restrict_Widgets {
 				}
 			}
 
-			wp_register_script( 'restrict-widgets-select2', RESTRICT_WIDGETS_URL . '/assets/select2.min.js', array( 'jquery' ) );
+			wp_register_script( 'restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.standalone.min.js', array( 'jquery' ) );
 
-			wp_enqueue_script( self::ID, RESTRICT_WIDGETS_URL . '/js/widgets.js', array( 'jquery', 'restrict-widgets-select2' ) );
+			wp_enqueue_script( self::ID, RESTRICT_WIDGETS_URL . '/js/widgets.js', array( 'jquery', 'restrict-widgets-fastselect' ) );
+			wp_enqueue_script( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/js/admin.js', array( 'jquery', 'restrict-widgets-fastselect' ) );
+
 
 			wp_localize_script(
 				self::ID,
@@ -879,16 +882,14 @@ final class Restrict_Widgets {
 				)
 			);
 
-			wp_enqueue_style(
-				'restrict-widgets-select2', RESTRICT_WIDGETS_URL . '/assets/select2.min.css'
-			);
+			wp_enqueue_style('restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.min.css');
+			wp_enqueue_style('restrict-widgets-fastselect-override', RESTRICT_WIDGETS_URL . '/css/fastselect-override.css');
 
-			wp_enqueue_style(
-				'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css'
-			);
+			wp_enqueue_style('restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css');
+
 		} elseif ( $page === 'settings_page_restrict-widgets' ) {
-			wp_register_script( 'restrict-widgets-select2', RESTRICT_WIDGETS_URL . '/assets/select2.min.js', array( 'jquery' ) );
-			wp_enqueue_script( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/js/admin.js', array( 'jquery', 'restrict-widgets-select2' ) );
+			wp_register_script( 'restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.standalone.min.js', array( 'jquery' ) );
+			wp_enqueue_script( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/js/admin.js', array( 'jquery', 'restrict-widgets-fastselect' ) );
 
 			wp_localize_script(
 				'restrict-widgets-admin',
@@ -898,7 +899,8 @@ final class Restrict_Widgets {
 				)
 			);
 
-			wp_enqueue_style( 'restrict-widgets-select2', RESTRICT_WIDGETS_URL . '/assets/select2.min.css' );
+			wp_enqueue_style('restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.min.css');
+			wp_enqueue_style('restrict-widgets-fastselect-override', RESTRICT_WIDGETS_URL . '/css/fastselect-override.css');
 			wp_enqueue_style( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css' );
 		}
 	}
@@ -1249,13 +1251,13 @@ final class Restrict_Widgets {
 		echo '
 		<p class="restrict-widgets-hide-div restrict-widgets">
 			<label>' . __( 'Display / Hide Widget', self::ID ) . '</label>
-			<select name="' . $widget->get_field_name( 'widget_select' ) . '" class="restrict-widgets-hide select2">
+			<select name="' . $widget->get_field_name( 'widget_select' ) . '" class="restrict-widgets-hide restrict-widgets-fastselect">
 				<option value="yes" ' . selected( $instance['rw_opt']['widget_select'], true, false ) . '>' . __( 'Display widget on selected', self::ID ) . '</option>
 				<option value="no" ' . selected( $instance['rw_opt']['widget_select'], false, false ) . '>' . __( 'Hide widget on selected', self::ID ) . '</option>
 			</select>
 		</p>
 		<p class="restrict-widgets-select-div restrict-widgets">
-			<select class="restrict-widgets-select select2" multiple="multiple" size="10" name="' . $widget->get_field_name( 'widget_multiselect' ) . '[]">';
+			<select class="restrict-widgets-fastselect" multiple size="10" name="' . $widget->get_field_name( 'widget_multiselect' ) . '[]">';
 
 		foreach ( $this->widget_options as $option => $text ) {
 			echo $this->get_selection_group( $option, 'widget', $widget, $instance );
