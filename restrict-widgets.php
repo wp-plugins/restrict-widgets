@@ -2,7 +2,7 @@
 /*
 Plugin Name: Restrict Widgets
 Description: All in one solution for widget management in WordPress. Allows you to hide or display widgets on specified pages and restrict access for users.
-Version: 1.3.1
+Version: 1.4.0
 Author: dFactory
 Contributers: Andy King (https://github.com/treminaor)
 Author URI: http://www.dfactory.eu/
@@ -908,8 +908,9 @@ final class Restrict_Widgets {
 	/**
 	 * Display groups of data (pages, custom post types, categories, taxonomiex, ...) for options and widget display.
 	 */
-	private function get_selection_group( $group_name, $type, $widget = '', $instance = '', $option = '' ) {
+	private function get_selection_group( $group_name, $type, $widget = '', $instance = '', $option = '', $exclusion = false ) {
 		$html = '';
+		$exclusion = ($exclusion ? '_exclude' : '');
 
 		switch ( $group_name ) {
 			case 'pages': {
@@ -928,10 +929,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['pages']['pageid_' . $page->ID] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['pageid_' . $page->ID] ) === false )
-											$instance['rw_opt']['pageid_' . $page->ID] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['pageid_' . $page->ID] ) === false )
+											$instance['rw_opt' . $exclusion]['pageid_' . $page->ID] = 0;
 
-										$html .= '<option value="pageid_' . $page->ID . '" ' . selected( $instance['rw_opt']['pageid_' . $page->ID], true, false ) . '>' . apply_filters( 'rw_option_display_name', $page->post_title, 'page' ) . '</option>';
+										$html .= '<option value="pageid_' . $page->ID . '" ' . selected( $instance['rw_opt' . $exclusion]['pageid_' . $page->ID], true, false ) . '>' . apply_filters( 'rw_option_display_name', $page->post_title, 'page' ) . '</option>';
 									}
 
 									break;
@@ -960,10 +961,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['custom_post_types']['cpt_' . $cpt->name] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['cpt_' . $cpt->name] ) === false )
-											$instance['rw_opt']['cpt_' . $cpt->name] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['cpt_' . $cpt->name] ) === false )
+											$instance['rw_opt' . $exclusion]['cpt_' . $cpt->name] = 0;
 
-										$html .= '<option value="cpt_' . $cpt->name . '" ' . selected( $instance['rw_opt']['cpt_' . $cpt->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', sprintf( __( 'Single %s', self::ID ), $cpt->label ), 'custom_post_type' ) . '</option>';
+										$html .= '<option value="cpt_' . $cpt->name . '" ' . selected( $instance['rw_opt' . $exclusion]['cpt_' . $cpt->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', sprintf( __( 'Single %s', self::ID ), $cpt->label ), 'custom_post_type' ) . '</option>';
 									}
 
 									break;
@@ -992,10 +993,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['custom_post_types_archives']['cpta_' . $cpta->name] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['cpta_' . $cpta->name] ) === false )
-											$instance['rw_opt']['cpta_' . $cpta->name] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['cpta_' . $cpta->name] ) === false )
+											$instance['rw_opt' . $exclusion]['cpta_' . $cpta->name] = 0;
 
-										$html .= '<option value="cpta_' . $cpta->name . '" ' . selected( $instance['rw_opt']['cpta_' . $cpta->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', sprintf( __( '%s Archive', self::ID ), $cpta->label ), 'custom_post_type_archive' ) . '</option>';
+										$html .= '<option value="cpta_' . $cpta->name . '" ' . selected( $instance['rw_opt' . $exclusion]['cpta_' . $cpta->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', sprintf( __( '%s Archive', self::ID ), $cpta->label ), 'custom_post_type_archive' ) . '</option>';
 									}
 
 									break;
@@ -1024,10 +1025,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['categories']['category_' . $category->cat_ID] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['category_' . $category->cat_ID] ) === false )
-											$instance['rw_opt']['category_' . $category->cat_ID] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['category_' . $category->cat_ID] ) === false )
+											$instance['rw_opt' . $exclusion]['category_' . $category->cat_ID] = 0;
 
-										$html .= '<option value="category_' . $category->cat_ID . '" ' . selected( $instance['rw_opt']['category_' . $category->cat_ID], true, false ) . '>' . apply_filters( 'rw_option_display_name', $category->cat_name, 'category' ) . '</option>';
+										$html .= '<option value="category_' . $category->cat_ID . '" ' . selected( $instance['rw_opt' . $exclusion]['category_' . $category->cat_ID], true, false ) . '>' . apply_filters( 'rw_option_display_name', $category->cat_name, 'category' ) . '</option>';
 									}
 
 									break;
@@ -1056,10 +1057,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['taxonomies']['taxonomy_' . $taxonomy->name] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['taxonomy_' . $taxonomy->name] ) === false )
-											$instance['rw_opt']['taxonomy_' . $taxonomy->name] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['taxonomy_' . $taxonomy->name] ) === false )
+											$instance['rw_opt' . $exclusion]['taxonomy_' . $taxonomy->name] = 0;
 
-										$html .= '<option value="taxonomy_' . $taxonomy->name . '" ' . selected( $instance['rw_opt']['taxonomy_' . $taxonomy->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', $taxonomy->label, 'taxonomy' ) . '</option>';
+										$html .= '<option value="taxonomy_' . $taxonomy->name . '" ' . selected( $instance['rw_opt' . $exclusion]['taxonomy_' . $taxonomy->name], true, false ) . '>' . apply_filters( 'rw_option_display_name', $taxonomy->label, 'taxonomy' ) . '</option>';
 									}
 
 									break;
@@ -1088,10 +1089,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['others']['others_' . $key] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['others_' . $key] ) === false )
-											$instance['rw_opt']['others_' . $key] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['others_' . $key] ) === false )
+											$instance['rw_opt' . $exclusion]['others_' . $key] = 0;
 
-										$html .= '<option value="others_' . $key . '" ' . selected( $instance['rw_opt']['others_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'other' ) . '</option>';
+										$html .= '<option value="others_' . $key . '" ' . selected( $instance['rw_opt' . $exclusion]['others_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'other' ) . '</option>';
 									}
 
 									break;
@@ -1120,10 +1121,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['devices']['devices_' . $key] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['devices_' . $key] ) === false )
-											$instance['rw_opt']['devices_' . $key] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['devices_' . $key] ) === false )
+											$instance['rw_opt' . $exclusion]['devices_' . $key] = 0;
 
-										$html .= '<option value="devices_' . $key . '" ' . selected( $instance['rw_opt']['devices_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'device' ) . '</option>';
+										$html .= '<option value="devices_' . $key . '" ' . selected( $instance['rw_opt' . $exclusion]['devices_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'device' ) . '</option>';
 									}
 
 									break;
@@ -1155,10 +1156,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['bbpress']['bbpress_' . $key] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['bbpress_' . $key] ) === false )
-											$instance['rw_opt']['bbpress_' . $key] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['bbpress_' . $key] ) === false )
+											$instance['rw_opt' . $exclusion]['bbpress_' . $key] = 0;
 
-										$html .= '<option value="bbpress_' . $key . '" ' . selected( $instance['rw_opt']['bbpress_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'bbpress' ) . '</option>';
+										$html .= '<option value="bbpress_' . $key . '" ' . selected( $instance['rw_opt' . $exclusion]['bbpress_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'bbpress' ) . '</option>';
 									}
 
 									break;
@@ -1187,10 +1188,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['users']['users_' . $key] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['users_' . $key] ) === false )
-											$instance['rw_opt']['users_' . $key] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['users_' . $key] ) === false )
+											$instance['rw_opt' . $exclusion]['users_' . $key] = 0;
 
-										$html .= '<option value="users_' . $key . '" ' . selected( $instance['rw_opt']['users_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'user' ) . '</option>';
+										$html .= '<option value="users_' . $key . '" ' . selected( $instance['rw_opt' . $exclusion]['users_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $value, 'user' ) . '</option>';
 									}
 
 									break;
@@ -1222,10 +1223,10 @@ final class Restrict_Widgets {
 								}
 							case 'widget': {
 									if ( ! isset( $this->options['selection']['languages']['language_' . $key] ) || current_user_can( 'manage_options' ) ) {
-										if ( isset( $instance['rw_opt']['language_' . $key] ) === false )
-											$instance['rw_opt']['language_' . $key] = 0;
+										if ( isset( $instance['rw_opt' . $exclusion]['language_' . $key] ) === false )
+											$instance['rw_opt' . $exclusion]['language_' . $key] = 0;
 
-										$html .= '<option value="language_' . $key . '" ' . selected( $instance['rw_opt']['language_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $language['native_name'], 'language' ) . '</option>';
+										$html .= '<option value="language_' . $key . '" ' . selected( $instance['rw_opt' . $exclusion]['language_' . $key], true, false ) . '>' . apply_filters( 'rw_option_display_name', $language['native_name'], 'language' ) . '</option>';
 									}
 
 									break;
@@ -1266,6 +1267,21 @@ final class Restrict_Widgets {
 		echo '
 			</select>
 		</p>';
+
+		echo '
+		<p class="restrict-widgets-select-div restrict-widgets">
+			<label>' . __( 'Exclusions from above results', self::ID ) . '</label>
+			<select class="restrict-widgets-fastselect" multiple size="10" name="' . $widget->get_field_name( 'widget_multiselect' ) . '[]">';
+
+		foreach ( $this->widget_options as $option => $text ) {
+			echo $this->get_selection_group( $option, 'widget', $widget, $instance, '', true );
+		}
+
+		echo '
+			</select>
+		</p>';
+
+
 	}
 
 	/**
