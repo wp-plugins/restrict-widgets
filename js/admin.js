@@ -1,7 +1,15 @@
 ( function ( $ ) {
 
+	function initialize(){
+	    $( '.restrict-widgets-fastselect' ).fastselect();
+	};
+
 	$( document ).ready( function () {
-		$( '.restrict-widgets-fastselect' ).fastselect();
+		initialize();
+
+		$(document).ajaxComplete(function () {
+	      initialize()
+	    });
 	} );
 
 	// ask whether to reset options to defaults
