@@ -59,7 +59,7 @@ No questions yet.
 
 ## Changelog
 
-### 1.4.0 (under development)
+### 1.4.0
 * New: jQuery dynamic multiselect has been changed to [jQuery Fastselect](https://dbrekalo.github.io/fastselect)
 * New: Exclusion option has been added to widget options. For example if you want a widget to hide on all "Single Pages" but you want a specific page slug to show the widget, you can add the page via the new "Excluded" choicebox in the widget settings.
 
