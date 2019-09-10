@@ -235,7 +235,7 @@ final class Restrict_Widgets {
 	}
 	
 	/**
-	 * Restricu widgets option.
+	 * Restrict widgets option.
 	 */
 	public function restrict_widgets_field() {
 		global $wp_registered_widgets;
@@ -271,7 +271,7 @@ final class Restrict_Widgets {
 	}
 	
 	/**
-	 * Restricu widgets option.
+	 * Restrict widgets option.
 	 */
 	public function restrict_options_field() {
 		echo '
@@ -888,8 +888,8 @@ final class Restrict_Widgets {
 			wp_enqueue_style('restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css');
 
 		} elseif ( $page === 'settings_page_restrict-widgets' ) {
-			wp_register_script( 'restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.standalone.min.js', array( 'jquery' ) );
-			wp_enqueue_script( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/js/admin.js', array( 'jquery', 'restrict-widgets-fastselect' ) );
+			wp_register_script('restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.standalone.min.js', array( 'jquery' ) );
+			wp_enqueue_script('restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/js/admin.js', array( 'jquery', 'restrict-widgets-fastselect' ) );
 
 			wp_localize_script(
 				'restrict-widgets-admin',
@@ -901,7 +901,7 @@ final class Restrict_Widgets {
 
 			wp_enqueue_style('restrict-widgets-fastselect', RESTRICT_WIDGETS_URL . '/vendor/fastselect.min.css');
 			wp_enqueue_style('restrict-widgets-fastselect-override', RESTRICT_WIDGETS_URL . '/css/fastselect-override.css');
-			wp_enqueue_style( 'restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css' );
+			wp_enqueue_style('restrict-widgets-admin', RESTRICT_WIDGETS_URL . '/css/admin.css');
 		}
 	}
 
@@ -1271,7 +1271,7 @@ final class Restrict_Widgets {
 		echo '
 		<p class="restrict-widgets-select-div restrict-widgets">
 			<label>' . __( 'Exclusions from above results', self::ID ) . '</label>
-			<select class="restrict-widgets-fastselect" multiple size="10" name="' . $widget->get_field_name( 'widget_multiselect' ) . '[]">';
+			<select class="restrict-widgets-fastselect" multiple size="10" name="' . $widget->get_field_name( 'widget_multiselect_exclude' ) . '[]">';
 
 		foreach ( $this->widget_options as $option => $text ) {
 			echo $this->get_selection_group( $option, 'widget', $widget, $instance, '', true );
@@ -1291,12 +1291,22 @@ final class Restrict_Widgets {
 		if ( is_array( $new_instance['widget_multiselect'] ) ) {
 			$selected = $new_instance['widget_multiselect'];
 
+			if ( is_array( $new_instance['widget_multiselect_exclude'] ) ) {
+				$excluded = $new_instance['widget_multiselect_exclude'];
+			}
+
 			// pages
 			foreach ( $this->pages as $page ) {
 				if ( in_array( 'pageid_' . $page->ID, $selected ) )
 					$instance['rw_opt']['pageid_' . $page->ID] = true;
 				else
 					unset( $instance['rw_opt']['pageid_' . $page->ID] );
+			}
+			foreach ( $this->pages as $page ) {
+				if ( in_array( 'pageid_' . $page->ID, $excluded ) )
+					$instance['rw_opt_exclude']['pageid_' . $page->ID] = true;
+				else
+					unset( $instance['rw_opt_exclude']['pageid_' . $page->ID] );
 			}
 
 			// custom post types
@@ -1306,6 +1316,12 @@ final class Restrict_Widgets {
 				else
 					unset( $instance['rw_opt']['cpt_' . $cpt->name] );
 			}
+			foreach ( $this->custom_post_types as $cpt ) {
+				if ( in_array( 'cpt_' . $cpt->name, $excluded ) )
+					$instance['rw_opt_exclude']['cpt_' . $cpt->name] = true;
+				else
+					unset( $instance['rw_opt_exclude']['cpt_' . $cpt->name] );
+			}
 
 			// custom post types archives
 			foreach ( $this->custom_post_types_archives as $cpta ) {
@@ -1313,6 +1329,12 @@ final class Restrict_Widgets {
 					$instance['rw_opt']['cpta_' . $cpta->name] = true;
 				else
 					unset( $instance['rw_opt']['cpta_' . $cpta->name] );
+			}
+			foreach ( $this->custom_post_types_archives as $cpta ) {
+				if ( in_array( 'cpta_' . $cpta->name, $excluded ) )
+					$instance['rw_opt_exclude']['cpta_' . $cpta->name] = true;
+				else
+					unset( $instance['rw_opt_exclude']['cpta_' . $cpta->name] );
 			}
 
 			// categories
@@ -1322,6 +1344,12 @@ final class Restrict_Widgets {
 				else
 					unset( $instance['rw_opt']['category_' . $category->cat_ID] );
 			}
+			foreach ( $this->categories as $category ) {
+				if ( in_array( 'category_' . $category->cat_ID, $excluded ) )
+					$instance['rw_opt_exclude']['category_' . $category->cat_ID] = true;
+				else
+					unset( $instance['rw_opt_exclude']['category_' . $category->cat_ID] );
+			}
 
 			// taxonomies
 			foreach ( $this->taxonomies as $taxonomy ) {
@@ -1329,6 +1357,12 @@ final class Restrict_Widgets {
 					$instance['rw_opt']['taxonomy_' . $taxonomy->name] = true;
 				else
 					unset( $instance['rw_opt']['taxonomy_' . $taxonomy->name] );
+			}
+			foreach ( $this->taxonomies as $taxonomy ) {
+				if ( in_array( 'taxonomy_' . $taxonomy->name, $excluded ) )
+					$instance['rw_opt_exclude']['taxonomy_' . $taxonomy->name] = true;
+				else
+					unset( $instance['rw_opt_exclude']['taxonomy_' . $taxonomy->name] );
 			}
 
 			// others
@@ -1338,6 +1372,12 @@ final class Restrict_Widgets {
 				else
 					unset( $instance['rw_opt']['others_' . $key] );
 			}
+			foreach ( $this->others as $key => $value ) {
+				if ( in_array( 'others_' . $key, $excluded ) )
+					$instance['rw_opt_exclude']['others_' . $key] = true;
+				else
+					unset( $instance['rw_opt_exclude']['others_' . $key] );
+			}
 
 			// devices
 			foreach ( $this->devices as $key => $value ) {
@@ -1345,6 +1385,12 @@ final class Restrict_Widgets {
 					$instance['rw_opt']['devices_' . $key] = true;
 				else
 					unset( $instance['rw_opt']['devices_' . $key] );
+			}
+			foreach ( $this->devices as $key => $value ) {
+				if ( in_array( 'devices_' . $key, $excluded ) )
+					$instance['rw_opt_exclude']['devices_' . $key] = true;
+				else
+					unset( $instance['rw_opt_exclude']['devices_' . $key] );
 			}
 
 			// bbpress
@@ -1355,6 +1401,12 @@ final class Restrict_Widgets {
 					else
 						unset( $instance['rw_opt']['bbpress_' . $key] );
 				}
+				foreach ( $this->bbpress as $key => $value ) {
+					if ( in_array( 'bbpress_' . $key, $excluded ) )
+						$instance['rw_opt_exclude']['bbpress_' . $key] = true;
+					else
+						unset( $instance['rw_opt_exclude']['bbpress_' . $key] );
+				}
 			}
 
 			// users
@@ -1363,6 +1415,12 @@ final class Restrict_Widgets {
 					$instance['rw_opt']['users_' . $key] = true;
 				else
 					unset( $instance['rw_opt']['users_' . $key] );
+			}
+			foreach ( $this->users as $key => $value ) {
+				if ( in_array( 'users_' . $key, $excluded ) )
+					$instance['rw_opt_exclude']['users_' . $key] = true;
+				else
+					unset( $instance['rw_opt_exclude']['users_' . $key] );
 			}
 
 			// languages
@@ -1373,11 +1431,19 @@ final class Restrict_Widgets {
 					else
 						unset( $instance['rw_opt']['language_' . $key] );
 				}
+				foreach ( $this->languages as $key => $value ) {
+					if ( in_array( 'language_' . $key, $excluded ) )
+						$instance['rw_opt_exclude']['language_' . $key] = true;
+					else
+						unset( $instance['rw_opt_exclude']['language_' . $key] );
+				}
 			}
 		}
 		// clear plugin-instance
-		else
+		else {
 			unset( $instance['rw_opt'] );
+			unset( $instance['rw_opt_exclude'] );
+		}
 
 		// widget_multiselect
 		$instance['rw_opt']['widget_select'] = ($new_instance['widget_select'] === 'yes' ? true : false);
@@ -1427,6 +1493,7 @@ final class Restrict_Widgets {
 
 		// get widget options
 		$options = $instance['rw_opt'];
+		$exclude = $instance['rw_opt_exclude'];
 
 		// get object id if available
 		$post_id = get_queried_object_id();
@@ -1492,17 +1559,37 @@ final class Restrict_Widgets {
 										$valid_option = true;
 									else
 										$valid_option = isset( $options['pageid_' . $post_id] );
+
+									if ( isset( $exclude['cpt_' . get_post_type( $post_id )] ) )
+										$valid_option = false;
+
+									if ( isset( $exclude['pageid_' . $post_id] ) )
+										$valid_option = false;
+
 								} else {
 									$valid_option = isset( $options['cpt_' . get_post_type( $post_id )] );
+									if( isset( $exclude['cpt_' . get_post_type( $post_id )] ) )
+										$valid_option = false;
 
-									if ( is_single() && ! $valid_option )
+									if ( is_single() && ! $valid_option ) {
 										$valid_option = isset( $options['others_single_post'] );
+										
+										if ( isset( $exclude['others_single_post'] ) )
+											$valid_option = false;
+									}
 								}
 							}
-							elseif ( is_post_type_archive() )
+							elseif ( is_post_type_archive() ) {
 								$valid_option = isset( $options['cpta_' . get_query_var( 'post_type' )] );
-							elseif ( is_category() )
+
+								if ( isset( $exclude['cpta_' . get_query_var( 'post_type' )] ) )
+									$valid_option = false;
+							}
+							elseif ( is_category() ) {
 								$valid_option = isset( $options['taxonomy_category'] ) ? true : isset( $options['category_' . get_query_var( 'cat' )] );
+								if ( isset( $exclude['taxonomy_category'] ) ? true : isset( $exclude['category_' . get_query_var( 'cat' )] ) )
+									$valid_option = false;
+							}
 							elseif ( is_tag() ) {
 								$object = get_queried_object();
 
@@ -1512,6 +1599,9 @@ final class Restrict_Widgets {
 									$tag = '';
 
 								$valid_option = isset( $options['taxonomy_post_tag'] ) ? true : isset( $options['taxonomy_' . $tag] );
+
+								if ( isset( $exclude['taxonomy_post_tag'] ) ? true : isset( $exclude['taxonomy_' . $tag] ) )
+									$valid_option = false;
 							}
 							elseif ( is_tax() ) {
 								$object = get_queried_object();
@@ -1522,23 +1612,50 @@ final class Restrict_Widgets {
 									$taxonomy = '';
 
 								$valid_option = isset( $options['taxonomy_' . $taxonomy] );
+
+								if ( isset( $exclude['taxonomy_' . $taxonomy] ) )
+									$valid_option = false;
 							}
-							elseif ( is_404() )
+							elseif ( is_404() ) {
 								$valid_option = isset( $options['others_404_page'] );
-							elseif ( is_sticky() )
+								if ( isset( $options['others_404_page'] ) )
+									$valid_option = false;
+							}
+							elseif ( is_sticky() ) {
 								$valid_option = isset( $options['others_sticky_post'] );
-							elseif ( is_search() )
+								if ( isset( $options['others_sticky_post'] ) )
+									$valid_option = false;
+							}
+							elseif ( is_search() ) {
 								$valid_option = isset( $options['others_search_page'] );
-							elseif ( is_author() )
+								if ( isset( $options['others_search_page'] ) )
+									$valid_option = false;
+							}
+							elseif ( is_author() ) {
 								$valid_option = isset( $options['others_author_archive'] );
-							elseif ( is_date() )
+								if ( isset( $options['others_author_archive'] ) )
+									$valid_option = false;
+							}
+							elseif ( is_date() ) {
 								$valid_option = isset( $options['others_date_archive'] );
-							elseif ( function_exists( 'bbp_is_search' ) && bbp_is_search() )
+								if ( isset( $options['others_date_archive'] ) )
+									$valid_option = false;
+							}
+							elseif ( function_exists( 'bbp_is_search' ) && bbp_is_search() ) {
 								$valid_option = isset( $options['bbpress_search'] );
-							elseif ( function_exists( 'bbp_is_single_user' ) && bbp_is_single_user() )
+								if ( isset( $options['bbpress_search'] ) )
+									$valid_option = false;
+							}
+							elseif ( function_exists( 'bbp_is_single_user' ) && bbp_is_single_user() ) {
 								$valid_option = isset( $options['bbpress_single_user'] );
-							elseif ( function_exists( 'bbp_is_topic_tag' ) && bbp_is_topic_tag() )
+								if ( isset( $options['bbpress_single_user'] ) )
+									$valid_option = false;
+							}
+							elseif ( function_exists( 'bbp_is_topic_tag' ) && bbp_is_topic_tag() ) {
 								$valid_option = isset( $options['bbpress_topic_tag'] );
+								if ( isset( $options['bbpress_topic_tag'] ) )
+									$valid_option = false;
+							}
 							break;
 					}
 				}
