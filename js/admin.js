@@ -1,15 +1,21 @@
 ( function ( $ ) {
 
 	function initialize(){
-	    $( '.restrict-widgets-fastselect' ).fastselect();
+		//$( '.restrict-widgets-fastselect' );
+		var selector = $( '.restrict-widgets-fastselect' );
+
+		//make sure this select hasn't already been initialized, otherwise we get nested duplicates.
+		if(!selector.parent().hasClass("fstElement")) {
+			$( '.restrict-widgets-fastselect' ).fastselect();
+		}
 	};
 
 	$( document ).ready( function () {
-		//initialize();
+		initialize();
 
 		$(document).ajaxComplete(function () {
-	      initialize()
-	    });
+			initialize()
+		});
 	} );
 
 	// ask whether to reset options to defaults
