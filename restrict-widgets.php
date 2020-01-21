@@ -31,7 +31,7 @@ define( 'RESTRICT_WIDGETS_REL_PATH', dirname( plugin_basename( __FILE__ ) ) . '/
 final class Restrict_Widgets {
 
 	const
-		VERSION = '1.4.0', // plugin version
+		VERSION = '1.4.1', // plugin version
 		ID = 'restrict-widgets';
 
 	private static $instance;
@@ -1252,7 +1252,7 @@ final class Restrict_Widgets {
 		echo '
 		<p class="restrict-widgets-hide-div restrict-widgets">
 			<label>' . __( 'Display / Hide Widget', self::ID ) . '</label>
-			<select name="' . $widget->get_field_name( 'widget_select' ) . '" class="restrict-widgets-hide restrict-widgets-fastselect">
+			<select name="' . $widget->get_field_name( 'widget_select' ) . '" class="restrict-widgets-hide restrict-widgets">
 				<option value="yes" ' . selected( $instance['rw_opt']['widget_select'], true, false ) . '>' . __( 'Display widget on selected', self::ID ) . '</option>
 				<option value="no" ' . selected( $instance['rw_opt']['widget_select'], false, false ) . '>' . __( 'Hide widget on selected', self::ID ) . '</option>
 			</select>
@@ -1490,6 +1490,8 @@ final class Restrict_Widgets {
 		// no restrict options?
 		if ( empty( $instance['rw_opt'] ) || ! is_array( $instance['rw_opt'] ) )
 			return $instance;
+
+		$instance = apply_filters('rw_display_widget_before', $instance);
 
 		// get widget options
 		$options = $instance['rw_opt'];

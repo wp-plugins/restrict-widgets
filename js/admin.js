@@ -5,7 +5,7 @@
 	};
 
 	$( document ).ready( function () {
-		initialize();
+		//initialize();
 
 		$(document).ajaxComplete(function () {
 	      initialize()
