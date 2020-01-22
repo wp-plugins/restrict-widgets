@@ -1,19 +1,19 @@
 ( function ( $ ) {
 
 	function initialize(){
-		//$( '.restrict-widgets-fastselect' );
-		var selector = $( '.restrict-widgets-fastselect' );
-
-		//make sure this select hasn't already been initialized, otherwise we get nested duplicates.
-		if(!selector.parent().hasClass("fstElement")) {
-			$( '.restrict-widgets-fastselect' ).fastselect();
-		}
+		$('.restrict-widgets-fastselect').each(function (index, item) {
+			//check if the parent element is dynamic (draggable) or if the instance ID has been filled in
+			if(! $(this).closest('form').parent().parent().attr('id').includes('__i__') ) {
+				$(this).fastselect();
+			}
+		});
 	};
 
 	$( document ).ready( function () {
 		initialize();
 
-		$(document).ajaxComplete(function () {
+		//This function happens on a heartbeat basis as well as a LOT of other times... check the console.
+		$(document).ajaxComplete(function() {
 			initialize()
 		});
 	} );
